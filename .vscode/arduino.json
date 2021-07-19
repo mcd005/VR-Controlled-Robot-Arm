@@ -1,0 +1,6 @@
+{
+    "board": "arduino:avr:uno",
+    "programmer": "arduino:avrisp",
+    "port": "COM9",
+    "sketch": "ArdiunoFirmware\\ArdiunoFirmware.ino"
+}
