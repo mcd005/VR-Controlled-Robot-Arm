@@ -1,6 +1,7 @@
 {
-    "board": "arduino:avr:uno",
+    "board": "arduino:avr:mega",
     "programmer": "arduino:avrisp",
     "port": "COM9",
-    "sketch": "ArdiunoFirmware\\ArdiunoFirmware.ino"
+    "sketch": "ArdiunoFirmware\\ArdiunoFirmware.ino",
+    "configuration": "cpu=atmega2560"
 }
