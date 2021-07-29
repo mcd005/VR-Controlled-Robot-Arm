@@ -8,8 +8,8 @@ public class HeadsetControlsManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-      var position = OVRInput.GetLocalControllerPosition(OVRInput.Controller.RTouch);
-      Debug.Log("What ios the position?: " + position);
+      // var position = OVRInput.GetLocalControllerPosition(OVRInput.Controller.RTouch);
+      // Debug.Log("What ios the position?: " + position);
     }
 
     // Update is called once per frame
