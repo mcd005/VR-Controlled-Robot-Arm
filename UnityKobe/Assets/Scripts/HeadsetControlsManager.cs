@@ -10,6 +10,9 @@ public class HeadsetControlsManager : MonoBehaviour
     {
       // var position = OVRInput.GetLocalControllerPosition(OVRInput.Controller.RTouch);
       // Debug.Log("What ios the position?: " + position);
+      // GameObject ovrCameraRig = GameObject.Find("OVRCameraRig");
+      // var oculusOVRManager = ovrCameraRig.GetComponent<OVRManager>();
+      // Debug.Log(oculusOVRManager);
     }
 
     // Update is called once per frame

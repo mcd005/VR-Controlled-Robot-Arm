@@ -16,11 +16,21 @@ public class WebCamDetect : MonoBehaviour
           // hardcoding the device name
           WebCamTexture mycam = new WebCamTexture(devices[1].name);
 
+          Debug.Log(mycam.deviceName + " jfdjfjfjf");
           rend.material.mainTexture = mycam;
-          if (mycam == null) {
-            Debug.Log("No device connected");
+          if (mycam.deviceName == "FaceTime HD Camera (Built-in)") {
+            Debug.Log("Ricoh Theta is not connected / on / in camera live mode");
           } else {
+            // bool linkConnected = false;
+            // if (linkConnected == false) {
+            //
+            // } else {
             mycam.Play();
+            // }
           }
+    }
+
+    private void runWithoutLink() {
+
     }
 }
