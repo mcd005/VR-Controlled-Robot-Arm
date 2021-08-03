@@ -30,6 +30,7 @@ public class ChangeColourOnClick : MonoBehaviour
         OVRInput.Update();
         if (OVRInput.Get(OVRInput.Button.One))
         {
+            Debug.Log("hello");
             toggle = !toggle;
             if (toggle)
             {
