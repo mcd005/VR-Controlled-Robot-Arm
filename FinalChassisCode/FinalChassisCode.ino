@@ -34,7 +34,8 @@ void setup() {
   pinMode(B_ENB, OUTPUT);
 }
 
-void forward(){
+void forward()
+{
 //front left motor
   digitalWrite(F_IN1, HIGH);
   digitalWrite(F_IN2, LOW);
