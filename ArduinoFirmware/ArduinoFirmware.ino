@@ -1,12 +1,7 @@
-#include "Arm.h"
 #include "ChasisControl.h"
 #include "HBridgeDriver.h"
 
-#define leftArmSelector1 11
-#define leftArmSelector2 12
-#define leftArmSelector3 13
-#define leftArmSelector4 14
-#define leftArmSelector5 15
+
 
 #define H1_ENA 1
 #define H1_IN1 2
@@ -22,16 +17,6 @@
 #define H2_IN4 11
 #define H2_ENB 12
 
-// Adafruit_PWMServoDriver pwmDriver = new Adafruit_PWMServoDriver();
-
-
-// Arm leftArm(pwmDriver,
-//             leftArmSelector1,
-//             leftArmSelector2,
-//             leftArmSelector3,
-//             leftArmSelector4,
-//             leftArmSelector5,
-//             );
 
 HBridgeDriver frontHbridge(H1_ENA,
                           H1_IN1,

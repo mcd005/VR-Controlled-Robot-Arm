@@ -16,7 +16,12 @@ HBridgeDriver::HBridgeDriver(int ENA,
     _ENB = ENB;
 }
 
-HBridgeDriver::begin()
+HBridgeDriver::~HBridgeDriver()
+{
+
+}
+
+void HBridgeDriver::begin()
 {
     pinMode(_ENA,OUTPUT);
     pinMode(_IN1,OUTPUT);
@@ -27,12 +32,9 @@ HBridgeDriver::begin()
 }
 
 
-HBridgeDriver::~HBridgeDriver()
-{
 
-}
 
-HBridgeDriver::moveForward()
+void HBridgeDriver::moveForward()
 {
     //front left motor
     digitalWrite(_IN1, HIGH);
@@ -46,18 +48,36 @@ HBridgeDriver::moveForward()
     digitalWrite(_ENB, HIGH);
 }
 
-HBridgeDriver::moveBackward()
+void HBridgeDriver::moveBackward()
 {
+    //front left motor
+    digitalWrite(_IN1, LOW);
+    digitalWrite(_IN2, HIGH);
 
+    //front right motor
+    digitalWrite(_IN3, LOW);
+    digitalWrite(_IN4, HIGH);
+
+    digitalWrite(_ENA, HIGH);
+    digitalWrite(_ENB, HIGH);
 }
 
-HBridgeDriver::turnLeft()
+void HBridgeDriver::turnLeft()
 {
-
+    //front left motor forward
+    digitalWrite(_IN1, HIGH);
+    digitalWrite(_IN2, LOW);
+    // front left motor backward
+    digitalWrite(_IN3, LOW);
+    digitalWrite(_IN4, HIGH);
 }
 
-HBridgeDriver::turnRight()
+void HBridgeDriver::turnRight()
 {
-
+    digitalWrite(_IN1, LOW);
+    digitalWrite(_IN2, HIGH);
+    // front left motor backward
+    digitalWrite(_IN3, HIGH);
+    digitalWrite(_IN4, LOW);
 }
 
