@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+using CommsManagerSpace;
 // FOR NOW very basic - can I record the position of the right hand controller through the environment?
 // displays all the data from the headset onto the text display
 public class HeadsetControlsManager : MonoBehaviour
@@ -39,6 +40,12 @@ public class HeadsetControlsManager : MonoBehaviour
     data += "\n Thumb rest: " + OVRInput.Get(OVRInput.Touch.SecondaryThumbRest).ToString();
     data += "\n Haptic feedback: " ;
     // Debug.Log(OVRInput.GetLocalControllerPosition(OVRInput.Controller.RTouch));
+
+    // let see if this works :/
+    CommsManager comm = new CommsManager();
+    comm.SendMessage();
+
+
     return data;
   }
 }
