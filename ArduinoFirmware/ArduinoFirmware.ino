@@ -1,37 +1,47 @@
-#include "Arm.h"
-
-#define leftArmSelector1 11
-#define leftArmSelector2 12
-#define leftArmSelector3 13
-#define leftArmSelector4 14
-#define leftArmSelector5 15
+#include "ChasisControl.h"
+#include "HBridgeDriver.h"
 
 
 
-Adafruit_PWMServoDriver pwmDriver = Adafruit_PWMServoDriver();
+#define H1_ENA 1
+#define H1_IN1 2
+#define H1_IN2 3
+#define H1_IN3 4
+#define H1_IN4 5
+#define H1_ENB 6
+
+#define H2_ENA 7
+#define H2_IN1 8
+#define H2_IN2 9
+#define H2_IN3 10
+#define H2_IN4 11
+#define H2_ENB 12
 
 
-Arm leftArm(pwmDriver,
-            leftArmSelector1,
-            leftArmSelector2,
-            leftArmSelector3,
-            leftArmSelector4,
-            leftArmSelector5,
-            );
+HBridgeDriver frontHbridge(H1_ENA,
+                          H1_IN1,
+                          H1_IN2,
+                          H1_IN3,
+                          H1_IN4,
+                          H1_ENB);
+
+HBridgeDriver backHBridge(H2_ENA,
+                          H2_IN1,
+                          H2_IN2,
+                          H2_IN3,
+                          H2_IN4,
+                          H2_ENB);
 
 
-Arm rightArm(pwmDriver);
+ChasisControl chasisControl(&frontHbridge,&backHBridge);
 
 
-void setup() {
-  // put your setup code here, to run once:
-  Serial.begin(9600);
+void setup() 
+{
+  chasisControl.begin();
 }
 
-void loop() {
-
-  leftArm.moveLeft();
-
-  Serial.println("Hello");
-  delay(1000);
+void loop() 
+{
+  chasisControl.Forward();
 }
