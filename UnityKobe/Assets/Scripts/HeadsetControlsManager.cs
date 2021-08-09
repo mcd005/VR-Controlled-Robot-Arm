@@ -36,7 +36,7 @@ public class HeadsetControlsManager : MonoBehaviour
   private string getData() {
         // note: https://docs.unity3d.com/2019.2/Documentation/Manual/OculusControllers.html <-- name of diff parts of controller
         string data = "<u> Right controller <u>";
-        data += "\n Position: " + OVRInput.GetLocalControllerPosition(OVRInput.Controller.RTouch).ToString("F3");
+        data += "\n Position: " + OVRInput.GetLocalControllerPosition(OVRInput.Controller.RHand).ToString("F3");
         //RControllerPos = OVRInput.GetLocalControllerPosition(OVRInput.Controller.RTouch).ToString("F3");
         data += "\n A button press: " + OVRInput.Get(OVRInput.Button.One).ToString();
         data += "\n B button press: " + OVRInput.Get(OVRInput.Button.Two).ToString();
@@ -55,6 +55,6 @@ public class HeadsetControlsManager : MonoBehaviour
 
         return data;
   }
- 
+
 
 }
