@@ -4,8 +4,9 @@ app = Flask(__name__)
 
 test = ''
 
-print("hi")
+print("script was run")
 
+# receiving a post request
 @app.route('/', methods=['POST']) 
 def changeIndex():
     if request.method == 'POST':
@@ -15,14 +16,15 @@ def changeIndex():
         print ("test: ", test)
         return test
     else :
-        print 
-        return render_template('registration.html')
+        print ("nothing was sent")
+        return "this is a GET request"
 
-@app.route('/')
+# test if we send data
+@app.route('/test')
 def getRequest():
     print ("helllllooooo")
-    return test
+    return "hello"
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host = '0.0.0.0', port = 5000, debug=True)
