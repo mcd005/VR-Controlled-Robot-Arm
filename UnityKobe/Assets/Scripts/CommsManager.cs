@@ -13,6 +13,7 @@ namespace CommsManagerSpace
         {
             Debug.Log("lalal");
 
+            // will need to get real data
             OperatorData data = new OperatorData();
 
             data.RControllerPos = "(1, 2, 3)";
@@ -27,7 +28,7 @@ namespace CommsManagerSpace
         // adapted from: https://answers.unity.com/questions/1491938/sending-an-https-post-request-with-json-body.html
         IEnumerator SendData()
         {
-            var request = new UnityWebRequest("http://localhost:5000/", "POST");
+            var request = new UnityWebRequest("http://192.168.0.118:5000/", "POST");
             byte[] bodyRaw = Encoding.UTF8.GetBytes(json);
             request.uploadHandler = (UploadHandler)new UploadHandlerRaw(bodyRaw);
             request.downloadHandler = (DownloadHandler)new DownloadHandlerBuffer();
@@ -47,6 +48,7 @@ namespace CommsManagerSpace
                          
         }
 
+        // fake class to replicate where the data comes from
         private class OperatorData
         {
             public string RControllerPos;
