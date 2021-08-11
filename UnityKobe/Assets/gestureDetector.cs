@@ -33,11 +33,11 @@ public class gestureDetector : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-      string data = "";
-      for (int i = 0; i < fingerBones.Length; i++) {
-        data += "\n " + fingerBones[0];
-      }
-      textElement.text = fingerBones[0].Transform.position.ToString();
+      //string data = "";
+      //for (int i = 0; i < fingerBones.Length; i++) {
+      //  data += "\n " + fingerBones[0];
+      //}
+      //textElement.text = fingerBones[0].Transform.position.ToString();
       // if (Input.GetKeyDown(KeyCode.Space)) {
       //   Save();
       // }

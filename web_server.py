@@ -7,17 +7,17 @@ test = ''
 print("script was run")
 
 # receiving a post request
-@app.route('/', methods=['POST']) 
+@app.route('/', methods=['POST', 'GET']) 
 def changeIndex():
     if request.method == 'POST':
         global test 
         test = request.get_json()
         print ("received POST request")
         print ("test: ", test)
-        return test
     else :
         print ("nothing was sent")
-        return "this is a GET request"
+        return test
+    return test
 
 # test if we send data
 @app.route('/test')
