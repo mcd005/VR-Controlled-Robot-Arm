@@ -5,12 +5,16 @@ using UnityEngine.Networking;
 using UnityEngine.UI;
 using System.Text;
 
+using UnityEngine.XR.Interaction.Toolkit;
+
 // FOR NOW very basic - can I record the position of the right hand controller through the environment?
 // displays all the data from the headset onto the text display
 public class HeadsetControlsManager : MonoBehaviour
 {
     public string textValue;
     public Text textElement;
+
+    //public XRRig xrRig;
 
     // CHASSIS control data
     public string LThumbstickUp;
@@ -21,41 +25,42 @@ public class HeadsetControlsManager : MonoBehaviour
     public string LHandTrigger;
 
     // BIG ARM data
+    public Vector3 RControllerPos;
 
     // PLATFORM/SMALL ARM data
+    public bool RAButtonPress;
+    public bool RBButtonPress;
 
-
-    private string json = "poop";
+    private string json = "";
 
     // Start is called before the first frame update
     void Start()
     {
         Debug.Log("sYEAGGAGGAAA");
-        textElement.text = textValue;
+        //textElement.text = textValue;
 
         LThumbstickUp = "";
         LThumbstickDown = "";
         LThumbstickRight = "";
         LThumbstickLeft = "";
+        LIndexTrigger = "";
+        LHandTrigger = "";
 
+        RControllerPos = new Vector3(0.0f, 0.0f, 0.0f);
 
-        InvokeRepeating("SendOperatorData", 1.0f, 1.0f);
-            
+        RAButtonPress = false;
+        RBButtonPress = false;
+        
+        InvokeRepeating("SendOperatorData", 1.0f, 0.01f);
+
+        //xrRig = FindObjectOfType<XRRig>();
+        //Debug.Log(xrRig);
+        //xrRig 
     }
 
     // Update is called once per frame
     void Update()
     {
-        //textElement.text = getData();
-        //Debug.Log("I am updating!");
-        //LThumbstickUp = OVRInput.Get(OVRInput.Button.PrimaryThumbstickUp).ToString();
-        //LThumbstickDown = OVRInput.Get(OVRInput.Button.PrimaryThumbstickDown).ToString();
-        //LThumbstickRight = OVRInput.Get(OVRInput.Button.PrimaryThumbstickRight).ToString();
-        //LThumbstickLeft = OVRInput.Get(OVRInput.Button.PrimaryThumbstickLeft).ToString();
-        //Debug.Log("i am done updating");
-
-        ////updateJSON();
-        //PutToJSON();
     }
 
     void SendOperatorData()
@@ -63,13 +68,27 @@ public class HeadsetControlsManager : MonoBehaviour
         StartCoroutine(PutToJSON());
     }
 
-    private IEnumerator PutToJSON()
-    {
+    void getOperatorData() {
+
+        // translatorClasses
+
         LThumbstickUp = OVRInput.Get(OVRInput.Button.PrimaryThumbstickUp).ToString();
         LThumbstickDown = OVRInput.Get(OVRInput.Button.PrimaryThumbstickDown).ToString();
         LThumbstickRight = OVRInput.Get(OVRInput.Button.PrimaryThumbstickRight).ToString();
         LThumbstickLeft = OVRInput.Get(OVRInput.Button.PrimaryThumbstickLeft).ToString();
+        LIndexTrigger = OVRInput.Get(OVRInput.Axis1D.PrimaryIndexTrigger).ToString();
+        LHandTrigger = OVRInput.Get(OVRInput.Axis1D.PrimaryHandTrigger).ToString();
 
+        RControllerPos = OVRInput.GetLocalControllerPosition(OVRInput.Controller.RHand);
+
+        RAButtonPress = OVRInput.Get(OVRInput.Button.One);
+        RBButtonPress = OVRInput.Get(OVRInput.Button.Two);
+    }
+
+    private IEnumerator PutToJSON()
+    {
+
+        getOperatorData();
         json = JsonUtility.ToJson(this);
         Debug.Log(json);
 
@@ -101,25 +120,5 @@ public class HeadsetControlsManager : MonoBehaviour
         Debug.Log("what does json look like here: " + json);
         return json;
     }
-
-    private string getData()
-    {
-        // note: https://docs.unity3d.com/2019.2/Documentation/Manual/OculusControllers.html <-- name of diff parts of controller
-        string data = "<u> Right controller <u>";
-        data += "\n Position: " + OVRInput.GetLocalControllerPosition(OVRInput.Controller.RHand).ToString("F3");
-        //RControllerPos = OVRInput.GetLocalControllerPosition(OVRInput.Controller.RTouch).ToString("F3");
-        data += "\n A button press: " + OVRInput.Get(OVRInput.Button.One).ToString();
-        data += "\n B button press: " + OVRInput.Get(OVRInput.Button.Two).ToString();
-        data += "\n ThumbstickPos: " + OVRInput.Get(OVRInput.Axis2D.SecondaryThumbstick).ToString("F3");
-        data += "\n Thumbstick up: " + OVRInput.Get(OVRInput.Button.SecondaryThumbstickUp).ToString();
-        data += "\n Index trigger: " + OVRInput.Get(OVRInput.Axis1D.SecondaryIndexTrigger).ToString();
-        data += "\n Hand trigger: " + OVRInput.Get(OVRInput.Axis1D.SecondaryHandTrigger).ToString();
-        data += "\n Thumb rest: " + OVRInput.Get(OVRInput.Touch.SecondaryThumbRest).ToString();
-        data += "\n Haptic feedback: ";
-        // Debug.Log(OVRInput.GetLocalControllerPosition(OVRInput.Controller.RTouch));
-
-        return data;
-    }
-
 
 }

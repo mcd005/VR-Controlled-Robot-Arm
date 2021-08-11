@@ -32,8 +32,9 @@ public class CommsManager : MonoBehaviour
 
         //StartCoroutine(SendData());
 
-        operatorData = new GameObject("HeadsetControlsManager");
+        operatorData = GameObject.Find("XR Rig");
 
+        Debug.Log(operatorData.GetComponent<HeadsetControlsManager>().getJSONFormatData());
         InvokeRepeating("ReadControllerDataDump", 1.0f, 1.0f);
 
     }
