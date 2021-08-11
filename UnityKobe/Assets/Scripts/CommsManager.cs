@@ -3,7 +3,6 @@ using UnityEngine;
 using UnityEngine.Networking;
 using System.Text;
 
-
 /*
  * think about the fact that if data is sent all the time then movement may be  staggered
  * this will not look good
@@ -14,51 +13,28 @@ using System.Text;
  */
 public class CommsManager : MonoBehaviour
 {
-    public string json;
-    private GameObject operatorData;
+    public string jsonData;
+    public HeadsetControlsManager headsetControlsManager;
 
     void Start()
     {
-        Debug.Log("lalal");
+        // instantiates headsetControllerObject that has data
+        headsetControlsManager = FindObjectOfType<HeadsetControlsManager>();
 
-        // will need to get real data
-        OperatorData data = new OperatorData();
-
-        data.RControllerPos = "(1, 2, 3)";
-        data.AButtonPressed = "False";
-
-        //json = JsonUtility.ToJson(data);
-        //Debug.Log(json);
-
-        //StartCoroutine(SendData());
-
-        operatorData = GameObject.Find("XR Rig");
-
-        Debug.Log(operatorData.GetComponent<HeadsetControlsManager>().getJSONFormatData());
+        // repeatedly calls a method that gets the data from headsetControlsManager in JSON format and sends it to webserver
         InvokeRepeating("ReadControllerDataDump", 1.0f, 1.0f);
-
     }
-
-    //private void Update()
-    //{
-    //    Debug.Log("commsManager update");
-    //    Debug.Log(json);
-    //}
 
     private void ReadControllerDataDump()
     {
-        //Debug.Log("Invoked repeatedly");
-        //json = operatorData.getJSONFormatData();
-        //Debug.Log("JSON received from headsetcontrols manager: " + json);
-        //Debug.Log("what is happening" + operatorData.getJSONFormatData());
-        //StartCoroutine(SendData());
+        StartCoroutine(SendData(headsetControlsManager.getJSON()));
     }
 
     // adapted from: https://answers.unity.com/questions/1491938/sending-an-https-post-request-with-json-body.html
-    IEnumerator SendData()
+    IEnumerator SendData(string jsonData)
     {
         var request = new UnityWebRequest("localHost:5000/", "POST");
-        byte[] bodyRaw = Encoding.UTF8.GetBytes(json);
+        byte[] bodyRaw = Encoding.UTF8.GetBytes(jsonData);
         request.uploadHandler = (UploadHandler)new UploadHandlerRaw(bodyRaw);
         request.downloadHandler = (DownloadHandler)new DownloadHandlerBuffer();
         request.SetRequestHeader("Content-Type", "application/json");
@@ -74,13 +50,5 @@ public class CommsManager : MonoBehaviour
             Debug.Log("All OK");
             Debug.Log("Status Code: " + request.responseCode);
         }
-
-    }
-
-    // fake class to replicate where the data comes from
-    private class OperatorData
-    {
-        public string RControllerPos;
-        public string AButtonPressed;
     }
 }

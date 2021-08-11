@@ -166,7 +166,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4eccb6d3b3acf2428c4ea29cd4a49d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  json: 
+  jsonData: 
+  headsetControlsManager: {fileID: 22645987}
 --- !u!1 &22645985
 GameObject:
   m_ObjectHideFlags: 0
