@@ -22,7 +22,7 @@ public class CommsManager : MonoBehaviour
         headsetControlsManager = FindObjectOfType<HeadsetControlsManager>();
 
         // repeatedly calls a method that gets the data from headsetControlsManager in JSON format and sends it to webserver
-        InvokeRepeating("ReadControllerDataDump", 1.0f, 0.1f);
+        InvokeRepeating("ReadControllerDataDump", 1.0f, 1.0f);
     }
 
     private void ReadControllerDataDump()
