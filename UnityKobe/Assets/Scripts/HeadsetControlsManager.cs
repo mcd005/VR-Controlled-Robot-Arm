@@ -34,7 +34,6 @@ public class HeadsetControlsManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {        
-        InvokeRepeating("PutToJSON", 1.0f, 0.01f);
     }
 
     // Update is called once per frame
@@ -87,9 +86,9 @@ public class HeadsetControlsManager : MonoBehaviour
         return json;
     }
 
-    private string toJSON(HeadsetControlsManager controller)
+    private string toJSON(HeadsetControlsManager headsetControlsManager)
     {
-        return JsonUtility.ToJson(controller);
+        return JsonUtility.ToJson(headsetControlsManager);
     }
 
 }
