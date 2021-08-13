@@ -17,17 +17,17 @@ public struct Gesture {
 public class gestureDetector : MonoBehaviour
 {
 
-    public OVRSkeleton skeleton;
-    public List<Gesture> gestures;
-    private List<OVRBone> fingerBones;
+    //public OVRSkeleton skeleton;
+    //public List<Gesture> gestures;
+    //private List<OVRBone> fingerBones;
 
     public string textValue;
     public Text textElement;
     // Start is called before the first frame update
     void Start()
     {
-      fingerBones = new List<OVRBone>(skeleton.Bones);
-      textElement.text = textValue;
+      //fingerBones = new List<OVRBone>(skeleton.Bones);
+      //textElement.text = textValue;
     }
 
     // Update is called once per frame

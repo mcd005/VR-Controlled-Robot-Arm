@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
+
 public enum SmallArmControl
 {
     UP = 0,
@@ -11,27 +12,45 @@ public enum SmallArmControl
 
 public enum ChassisDirection
 {
-    UP = 0,
-    DOWN,
+    FORWARD = 0,
+    BACKWARDS,
     LEFT,
     RIGHT,
     ROTATE_LEFT,
-    ROTATE_RIGHT
+    ROTATE_RIGHT,
+    NONE
 }
 
+public struct ChassisControlData
+{
+    public bool LThumbstickUp;
+    public bool LThumbstickDown;
+    public bool LThumbstickRight;
+    public bool LThumbstickLeft;
+    
+    public float LIndexTrigger;
+    public float LHandTrigger;
 
+    public bool thumbStickUsed()
+    {
+        if (LThumbstickLeft || LThumbstickDown || LThumbstickRight || LThumbstickUp)
+        {
+            return true;
+        } else
+        {
+            return false;
+        }
+    }
+}
 
 // FOR NOW very basic - can I record the position of the right hand controller through the environment?
 // displays all the data from the headset onto the text display
 public class HeadsetControlsManager : MonoBehaviour
 {
     // CHASSIS control data
-    private bool LThumbstickUp;
-    private bool LThumbstickDown;
-    private bool LThumbstickRight;
-    private bool LThumbstickLeft;
-    private float LIndexTrigger;
-    private float LHandTrigger;
+    private ChassisControlData chassisControlData = new ChassisControlData();
+
+
 
     // BIG ARM data
     private Vector3 RControllerPos = new Vector3(0.0f, 0.0f, 0.0f);
@@ -58,24 +77,24 @@ public class HeadsetControlsManager : MonoBehaviour
     }
     
     // Update is called once per frame
-    void Update()
+    public void Update()
     {
         getControllerData();
-        translateChassisData();
+        translateChassisData(chassisControlData);
         translateBigArmData(new Vector3(0,0,0));
         translateSmallArmData(false,false);
         json = toJSON(this);
     }
 
-    void getControllerData()
+    public void getControllerData()
     {
         // chassis
-        LThumbstickUp = OVRInput.Get(OVRInput.Button.PrimaryThumbstickUp);
-        LThumbstickDown = OVRInput.Get(OVRInput.Button.PrimaryThumbstickDown);
-        LThumbstickRight = OVRInput.Get(OVRInput.Button.PrimaryThumbstickRight);
-        LThumbstickLeft = OVRInput.Get(OVRInput.Button.PrimaryThumbstickLeft);
-        LIndexTrigger = OVRInput.Get(OVRInput.Axis1D.PrimaryIndexTrigger);
-        LHandTrigger = OVRInput.Get(OVRInput.Axis1D.PrimaryHandTrigger);
+        chassisControlData.LThumbstickUp = OVRInput.Get(OVRInput.Button.PrimaryThumbstickUp);
+        chassisControlData.LThumbstickDown = OVRInput.Get(OVRInput.Button.PrimaryThumbstickDown);
+        chassisControlData.LThumbstickRight = OVRInput.Get(OVRInput.Button.PrimaryThumbstickRight);
+        chassisControlData.LThumbstickLeft = OVRInput.Get(OVRInput.Button.PrimaryThumbstickLeft);
+        chassisControlData.LIndexTrigger = OVRInput.Get(OVRInput.Axis1D.PrimaryIndexTrigger);
+        chassisControlData.LHandTrigger = OVRInput.Get(OVRInput.Axis1D.PrimaryHandTrigger);
 
         // big arm 
         RControllerPos = OVRInput.GetLocalControllerPosition(OVRInput.Controller.RHand);
@@ -85,7 +104,7 @@ public class HeadsetControlsManager : MonoBehaviour
         RBButtonPress = OVRInput.Get(OVRInput.Button.Two);
     }
 
-    void translateBigArmData(Vector3 position)
+    public void translateBigArmData(Vector3 position)
     {
         float x = position.x;
         float y = position.y;
@@ -99,12 +118,40 @@ public class HeadsetControlsManager : MonoBehaviour
         bigArmShoulder = 90;
     }
 
-    void translateChassisData()
+    public void translateChassisData(ChassisControlData chassisControlData)
     {
-        chassisDirection = ChassisDirection.UP;
+        // thumbstick cannot be in two different position
+        // put priority on forward, backward, left and right movement
+        if (chassisControlData.LHandTrigger > 0 && !chassisControlData.thumbStickUsed())
+        {
+            chassisDirection = ChassisDirection.ROTATE_LEFT;
+        }
+        else if (chassisControlData.LIndexTrigger > 0 && !chassisControlData.thumbStickUsed())
+        {
+            chassisDirection = ChassisDirection.ROTATE_RIGHT;
+        }
+        else if (chassisControlData.LThumbstickUp)
+        {
+            chassisDirection = ChassisDirection.FORWARD;
+        }
+        else if (chassisControlData.LThumbstickDown)
+        {
+            chassisDirection = ChassisDirection.BACKWARDS;
+        }
+        else if (chassisControlData.LThumbstickLeft)
+        {
+            chassisDirection = ChassisDirection.LEFT;
+        }
+        else if (chassisControlData.LThumbstickRight)
+        {
+            chassisDirection = ChassisDirection.RIGHT;
+        } else
+        {
+            chassisDirection = ChassisDirection.NONE;
+        }
     }
 
-    private void translateSmallArmData(bool AButton, bool BButton)
+    public void translateSmallArmData(bool AButton, bool BButton)
     {
         if (AButton && BButton)
         {
@@ -124,13 +171,21 @@ public class HeadsetControlsManager : MonoBehaviour
         }
     }
 
+
     public string getJSON()
     {
-        Debug.Log(json);
+        Debug.Log("Major POOOP: " + json);
+
         return json;
     }
 
-    private string toJSON(HeadsetControlsManager headsetControlsManager)
+    public ChassisControlData getChassisControlDataObject()
+    {
+        return chassisControlData;
+    }
+
+
+    public string toJSON(HeadsetControlsManager headsetControlsManager)
     {
         return JsonUtility.ToJson(headsetControlsManager);
     }
