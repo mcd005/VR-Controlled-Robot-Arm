@@ -161,19 +161,20 @@ public class HeadsetControlsManagerTest
         var expectedJson = "{\"bigArmWristFlexor\":90,\"bigArmClaw\":90,\"bigArmWristRotator\":90,\"bigArmElbow\":90,\"bigArmShoulder\":90,\"smallArmVerticalDirection\":2,\"chassisDirection\":6}";
         Assert.AreEqual(expectedJson, json);
 
-        //chassisData.LHandTrigger = 0.0f;
-        //chassisData.LIndexTrigger = 0.0f;
-        //chassisData.LThumbstickDown = false;
-        //chassisData.LThumbstickLeft = false;
-        //chassisData.LThumbstickRight = false;
-        //chassisData.LThumbstickUp = true;
-        //headsetControlsManager.translateBigArmData(new Vector3(1.0000f, -0.3000f, 5.0000f));
-        //headsetControlsManager.translateSmallArmData(true, false);
-        //expectedJson = "{\"bigArmWristFlexor\":90,\"bigArmClaw\":90,\"bigArmWristRotator\":90,\"bigArmElbow\":90,\"bigArmShoulder\":90,\"smallArmVerticalDirection\":0,\"chassisDirection\":0}";
-        //headsetControlsManager.toJSON(headsetControlsManager);
-        //json = headsetControlsManager.getJSON();
-        ////Debug.Log("1" + json);
-        //Assert.AreEqual(expectedJson, json);
+        chassisData.LHandTrigger = 0.0f;
+        chassisData.LIndexTrigger = 0.0f;
+        chassisData.LThumbstickDown = false;
+        chassisData.LThumbstickLeft = false;
+        chassisData.LThumbstickRight = false;
+        chassisData.LThumbstickUp = true;
+        headsetControlsManager.translateBigArmData(new Vector3(1.0000f, -0.3000f, 5.0000f));
+        headsetControlsManager.translateSmallArmData(true, false);
+        // could be not passing because information gets changed to quickly -- will only stay for one frame
+        expectedJson = "{\"bigArmWristFlexor\":90,\"bigArmClaw\":90,\"bigArmWristRotator\":90,\"bigArmElbow\":90,\"bigArmShoulder\":90,\"smallArmVerticalDirection\":0,\"chassisDirection\":0}";
+        headsetControlsManager.toJSON(headsetControlsManager);
+        json = headsetControlsManager.getJSON();
+        //Debug.Log("1" + json);
+        Assert.AreEqual(expectedJson, json);
 
         //chassisData.LHandTrigger = 1.0f;
         //chassisData.LIndexTrigger = 1.0f;

@@ -27,7 +27,7 @@ public struct ChassisControlData
     public bool LThumbstickDown;
     public bool LThumbstickRight;
     public bool LThumbstickLeft;
-    
+
     public float LIndexTrigger;
     public float LHandTrigger;
 
@@ -74,16 +74,30 @@ public class HeadsetControlsManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+      InvokeRepeating("updateData", 1.0f, 0.1f);
     }
-    
+
     // Update is called once per frame
-    public void Update()
+    // public void Update()
+    // {
+    //     getControllerData();
+    //     translateChassisData(chassisControlData);
+    //     translateBigArmData(RControllerPos);
+    //     translateSmallArmData(RAButtonPress,RBButtonPress);
+    //     json = toJSON(this);
+    // }
+
+    // private void DoTheUpdate()
+    // {
+    //   StartCoroutine(updateData());
+    // }
+    private void updateData()
     {
-        getControllerData();
-        translateChassisData(chassisControlData);
-        translateBigArmData(new Vector3(0,0,0));
-        translateSmallArmData(false,false);
-        json = toJSON(this);
+      getControllerData();
+      translateChassisData(chassisControlData);
+      translateBigArmData(RControllerPos);
+      translateSmallArmData(RAButtonPress,RBButtonPress);
+      json = toJSON(this);
     }
 
     public void getControllerData()
@@ -96,7 +110,7 @@ public class HeadsetControlsManager : MonoBehaviour
         chassisControlData.LIndexTrigger = OVRInput.Get(OVRInput.Axis1D.PrimaryIndexTrigger);
         chassisControlData.LHandTrigger = OVRInput.Get(OVRInput.Axis1D.PrimaryHandTrigger);
 
-        // big arm 
+        // big arm
         RControllerPos = OVRInput.GetLocalControllerPosition(OVRInput.Controller.RHand);
 
         // small arm
@@ -174,8 +188,6 @@ public class HeadsetControlsManager : MonoBehaviour
 
     public string getJSON()
     {
-        Debug.Log("Major POOOP: " + json);
-
         return json;
     }
 
