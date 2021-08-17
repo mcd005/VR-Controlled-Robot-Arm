@@ -48,9 +48,8 @@ public struct ChassisControlData
 public class HeadsetControlsManager : MonoBehaviour
 {
     // CHASSIS control data
+
     private ChassisControlData chassisControlData = new ChassisControlData();
-
-
 
     // BIG ARM data
     private Vector3 RControllerPos = new Vector3(0.0f, 0.0f, 0.0f);
@@ -110,6 +109,7 @@ public class HeadsetControlsManager : MonoBehaviour
         chassisControlData.LIndexTrigger = OVRInput.Get(OVRInput.Axis1D.PrimaryIndexTrigger);
         chassisControlData.LHandTrigger = OVRInput.Get(OVRInput.Axis1D.PrimaryHandTrigger);
 
+
         // big arm
         RControllerPos = OVRInput.GetLocalControllerPosition(OVRInput.Controller.RHand);
 
@@ -117,6 +117,7 @@ public class HeadsetControlsManager : MonoBehaviour
         RAButtonPress = OVRInput.Get(OVRInput.Button.One);
         RBButtonPress = OVRInput.Get(OVRInput.Button.Two);
     }
+
 
     public void translateBigArmData(Vector3 position)
     {
@@ -186,6 +187,7 @@ public class HeadsetControlsManager : MonoBehaviour
     }
 
 
+
     public string getJSON()
     {
         return json;
@@ -200,6 +202,7 @@ public class HeadsetControlsManager : MonoBehaviour
     public string toJSON(HeadsetControlsManager headsetControlsManager)
     {
         return JsonUtility.ToJson(headsetControlsManager);
+
     }
 
 }
