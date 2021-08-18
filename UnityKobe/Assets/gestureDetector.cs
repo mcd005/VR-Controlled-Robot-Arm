@@ -26,6 +26,7 @@ public class gestureDetector : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+
       //fingerBones = new List<OVRBone>(skeleton.Bones);
       //textElement.text = textValue;
     }

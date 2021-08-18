@@ -48,9 +48,8 @@ public struct ChassisControlData
 public class HeadsetControlsManager : MonoBehaviour
 {
     // CHASSIS control data
+
     private ChassisControlData chassisControlData = new ChassisControlData();
-
-
 
     // BIG ARM data
     private Vector3 RControllerPos = new Vector3(0.0f, 0.0f, 0.0f);
@@ -155,6 +154,14 @@ public class HeadsetControlsManager : MonoBehaviour
     {
         if (AButton && BButton)
         {
+            chassisDirection = ChassisDirection.NONE;
+        }
+    }
+
+    public void translateSmallArmData(bool AButton, bool BButton)
+    {
+        if (AButton && BButton)
+        {
             smallArmVerticalDirection = SmallArmControl.DO_NOTHING;
         }
         else if (AButton)
@@ -172,6 +179,7 @@ public class HeadsetControlsManager : MonoBehaviour
     }
 
 
+
     public string getJSON()
     {
         return json;
@@ -186,6 +194,7 @@ public class HeadsetControlsManager : MonoBehaviour
     public string toJSON(HeadsetControlsManager headsetControlsManager)
     {
         return JsonUtility.ToJson(headsetControlsManager);
+
     }
 
 }
