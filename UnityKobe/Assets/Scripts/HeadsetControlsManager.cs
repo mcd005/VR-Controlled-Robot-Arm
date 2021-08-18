@@ -77,20 +77,6 @@ public class HeadsetControlsManager : MonoBehaviour
       InvokeRepeating("updateData", 1.0f, 0.1f);
     }
 
-    // Update is called once per frame
-    // public void Update()
-    // {
-    //     getControllerData();
-    //     translateChassisData(chassisControlData);
-    //     translateBigArmData(RControllerPos);
-    //     translateSmallArmData(RAButtonPress,RBButtonPress);
-    //     json = toJSON(this);
-    // }
-
-    // private void DoTheUpdate()
-    // {
-    //   StartCoroutine(updateData());
-    // }
     private void updateData()
     {
       getControllerData();
@@ -125,11 +111,11 @@ public class HeadsetControlsManager : MonoBehaviour
         float z = position.z;
         // complex mathematics for x, y, z to ouput degree for each servo
 
-        bigArmWristFlexor = 90;
-        bigArmClaw = 90;
-        bigArmWristRotator = 90;
-        bigArmElbow = 90;
-        bigArmShoulder = 90;
+        bigArmWristFlexor = 60;
+        bigArmClaw = 0;
+        bigArmWristRotator = 0;
+        bigArmElbow = 0;
+        bigArmShoulder = 0;
     }
 
     public void translateChassisData(ChassisControlData chassisControlData)
