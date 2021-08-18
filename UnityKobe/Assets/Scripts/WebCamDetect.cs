@@ -10,14 +10,14 @@ public class WebCamDetect : MonoBehaviour
           WebCamDevice[] devices = WebCamTexture.devices;
           Renderer rend = this.GetComponentInChildren<Renderer>();
 
-        if (devices.Length > 1)
+        if (devices.Length > 0)
         {
             for (int i = 0; i < devices.Length; i++)
             {
                 Debug.Log(devices[i].name);
             }
             // hardcoding the device name
-            WebCamTexture mycam = new WebCamTexture(devices[1].name);
+            WebCamTexture mycam = new WebCamTexture(devices[2].name);
 
             Debug.Log(mycam.deviceName + " jfdjfjfjf");
             rend.material.mainTexture = mycam;
@@ -27,12 +27,7 @@ public class WebCamDetect : MonoBehaviour
             }
             else
             {
-                // bool linkConnected = false;
-                // if (linkConnected == false) {
-                //
-                // } else {
                 mycam.Play();
-                // }
             }
         }
     }

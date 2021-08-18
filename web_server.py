@@ -1,26 +1,27 @@
 from flask import Flask, render_template, request
+import serial
+import time
+import json
 
 app = Flask(__name__)
 
-json = ''
+jsonData = ''
 
-ser = serial.Serial(port = "/dev/ttyACM0", baudrate = 9600, timeout = 1.0)
+ser = serial.Serial(port = "/dev/ttyS0", baudrate = 9600, timeout = 1.0)
 
-print("script was run")
+print("Server is running")
 
 # receiving a post request
 @app.route('/', methods=['POST', 'GET'])
 def changeIndex():
     if request.method == 'POST':
-        global json
-        json = request.get_json()
-        print ("received POST request")
-        print ("test: ", json)
-        ser.write(json)
+        jsonData = json.dumps(request.get_json())
+        print ("JSON string from Unity: ", jsonData)
+        ser.write(jsonData.encode("utf-8"))
     else :
         print ("nothing was sent")
-        return json
-    return json
+        return jsonData
+    return jsonData
 
 # test if we send data
 @app.route('/test')
