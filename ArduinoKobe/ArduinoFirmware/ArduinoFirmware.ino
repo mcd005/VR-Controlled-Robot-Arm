@@ -1,7 +1,12 @@
+#include <ArduinoJson.h>
+
 #include "ChasisControl.h"
 #include "HBridgeDriver.h"
+#include "Arm.h"
 
-
+#define DEBUG
+#define PiSerial Serial2
+#define Debug Serial
 
 #define H1_ENA 1
 #define H1_IN1 2
@@ -35,13 +40,42 @@ HBridgeDriver backHBridge(H2_ENA,
 
 ChasisControl chasisControl(&frontHbridge,&backHBridge);
 
+// there should be two of these 
+Arm armControl("need to add PWM driver here")
+
+RobotControl robotControl(&chasisControl,&armControl);
 
 void setup() 
 {
+
+DynamicJsonDocument controlDataJson(1024);
+
+
+void setup() 
+{
+  Debug.begin(9600);
+  PiSerial.begin(9600);
+
   chasisControl.begin();
 }
 
 void loop() 
 {
-  chasisControl.Forward();
+
+  if (PiSerial.available() > 0)
+  {   
+      DeserializationError error = deserializeJson(controlDataJson, PiSerial);
+      if (error) 
+      {
+        Serial.print(F("deserializeJson() failed: "));
+        Serial.println(error.f_str());
+        return;
+      }
+  }
+
+  robotControl.handleChassis(controlDataJson);
+  robotControl.handleSmallArm(controlDataJson);
+  robotControl.handleBigArm(controlDataJson);
+
+  Serial2.flush();
 }
