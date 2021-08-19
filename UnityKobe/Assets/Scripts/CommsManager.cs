@@ -13,42 +13,42 @@ using System.Text;
  */
 public class CommsManager : MonoBehaviour
 {
-    public string jsonData;
-    public HeadsetControlsManager headsetControlsManager;
-
-    void Start()
-    {
-        // instantiates headsetControllerObject that has data
-        headsetControlsManager = FindObjectOfType<HeadsetControlsManager>();
-
-        // repeatedly calls a method that gets the data from headsetControlsManager in JSON format and sends it to webserver
-        InvokeRepeating("ReadControllerDataDump", 1.0f, 1.0f);
-    }
-
-    private void ReadControllerDataDump()
-    {
-        StartCoroutine(SendData(headsetControlsManager.getJSON()));
-    }
-
-    // adapted from: https://answers.unity.com/questions/1491938/sending-an-https-post-request-with-json-body.html
-    IEnumerator SendData(string jsonData)
-    {
-        var request = new UnityWebRequest("http://192.168.0.118:5000/", "POST");
-        byte[] bodyRaw = Encoding.UTF8.GetBytes(jsonData);
-        request.uploadHandler = (UploadHandler)new UploadHandlerRaw(bodyRaw);
-        request.downloadHandler = (DownloadHandler)new DownloadHandlerBuffer();
-        request.SetRequestHeader("Content-Type", "application/json");
-        yield return request.SendWebRequest();
-
-        if (request.error != null)
-        {
-            Debug.Log("Error");
-            Debug.Log("Status Code: " + request.responseCode);
-        }
-        else
-        {
-            Debug.Log("All OK");
-            Debug.Log("Status Code: " + request.responseCode);
-        }
-    }
+    // public string jsonData;
+    // public HeadsetControlsManager headsetControlsManager;
+    //
+    // void Start()
+    // {
+    //     // instantiates headsetControllerObject that has data
+    //     headsetControlsManager = FindObjectOfType<HeadsetControlsManager>();
+    //
+    //     // repeatedly calls a method that gets the data from headsetControlsManager in JSON format and sends it to webserver
+    //     InvokeRepeating("ReadControllerDataDump", 1.0f, 1.0f);
+    // }
+    //
+    // private void ReadControllerDataDump()
+    // {
+    //     StartCoroutine(SendData(headsetControlsManager.getJSON()));
+    // }
+    //
+    // // adapted from: https://answers.unity.com/questions/1491938/sending-an-https-post-request-with-json-body.html
+    // IEnumerator SendData(string jsonData)
+    // {
+    //     var request = new UnityWebRequest("http://192.168.0.118:5000/", "POST");
+    //     byte[] bodyRaw = Encoding.UTF8.GetBytes(jsonData);
+    //     request.uploadHandler = (UploadHandler)new UploadHandlerRaw(bodyRaw);
+    //     request.downloadHandler = (DownloadHandler)new DownloadHandlerBuffer();
+    //     request.SetRequestHeader("Content-Type", "application/json");
+    //     yield return request.SendWebRequest();
+    //
+    //     if (request.error != null)
+    //     {
+    //         Debug.Log("Error");
+    //         Debug.Log("Status Code: " + request.responseCode);
+    //     }
+    //     else
+    //     {
+    //         Debug.Log("All OK");
+    //         Debug.Log("Status Code: " + request.responseCode);
+    //     }
+    // }
 }
