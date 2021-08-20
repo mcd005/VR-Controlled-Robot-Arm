@@ -1,14 +1,21 @@
 #include <ArduinoJson.h>
+#include <Adafruit_PWMServoDriver.h>
+#include <Wire.h>
 
 #include "ChassisControl.h"
 #include "HBridgeDriver.h"
 #include "Arm.h"
 #include "SmallArm.h"
 #include "BigArm.h"
+#include "Joint.hpp"
 
 #define DEBUG
-#define PiSerial Serial2
 #define Debug Serial
+#define Bluetooth Serial1
+#define PiSerial Serial2
+
+#define SERVO_FREQ 50
+
 
 #define H1_ENA 35
 #define H1_IN1 32
@@ -43,15 +50,18 @@ HBridgeDriver backHBridge(H2_ENA,
 
 ChassisControl chassisControl(&frontHbridge,&backHBridge);
 
-// there should be two of these 
-Arm armControl("need to add PWM driver here")
-SmallArm smallArmControl()
-BigArm bigArmControl()
+Adafruit_PWMServoDriver pwm = Adafruit_PWMServoDriver();
 
-RobotControl robotControl(&chasisControl,&smallArmControl, &bigArmControl);
+Joint waist("waist", 90, 150, 450, 0, &pwm);
+Joint shoulder("shoulder", 0, 150, 450,  1, &pwm);
+Joint elbow("elbow", 0, 150, 450, 2, &pwm);
+Joint pitch("pitch", 0, 150, 450, 3, &pwm);
+Joint roll("roll", 0, 150, 450, 4, &pwm);
+Joint claw("claw", 0, 150, 450, 5, &pwm);
 
-void setup() 
-{
+BigArm bigArm(&waist,&shoulder,&elbow,&pitch,&roll,&claw); 
+
+RobotControl robotControl(&chasisControl,&smallArmControl, &bigArm);
 
 DynamicJsonDocument controlDataJson(1024);
 
@@ -60,26 +70,37 @@ void setup()
   Debug.begin(9600);
   PiSerial.begin(9600);
 
+  Bluetooth.begin(9600);
+  Bluetooth.setTimeout(10);
+
+  pwm.begin();
+  pwm.setPWMFreq(SERVO_FREQ);
+
+  bigArm.begin();
+
   chassisControl.begin();
+
 }
 
 void loop() 
 {
-
-  if (PiSerial.available() > 0)
-  {   
-      DeserializationError error = deserializeJson(controlDataJson, PiSerial);
-      if (error) 
-      {
-        Debug.print(F("deserializeJson() failed: "));
-        Debug.println(error.f_str());
-        return;
-      }
-  }
-
-  robotControl.handleChassis(controlDataJson);
-  robotControl.handleSmallArm(controlDataJson);
-  robotControl.handleBigArm(controlDataJson);
-
+  robotControl.handleControl(controlDataJson);
   Serial2.flush();
+}
+
+void serialEvent1() 
+{
+  while (Serial1.available()) 
+  {
+    if (PiSerial.available() > 0)
+    {   
+        DeserializationError error = deserializeJson(controlDataJson, PiSerial);
+        if (error) 
+        {
+          Debug.print(F("deserializeJson() failed: "));
+          Debug.println(error.f_str());
+          return;
+        }
+    }
+  }
 }

@@ -1,12 +1,14 @@
+#pragma once
+
 #include "HBridgeDriver.h"
 
-class ChasisControl
+class ChassisControl
 {
 
 public:
-    ChasisControl(HBridgeDriver* FrontHbridge,HBridgeDriver* BackHBridge);
+    ChassisControl(HBridgeDriver* FrontHbridge,HBridgeDriver* BackHBridge);
 
-    ~ChasisControl();
+    ~ChassisControl();
 
     void begin();
 

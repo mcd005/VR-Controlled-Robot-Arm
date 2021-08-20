@@ -1,46 +1,46 @@
-#include "ChasisControl.h"
+#include "ChassisControl.h"
 
-ChasisControl::ChasisControl(HBridgeDriver* frontHbridge,HBridgeDriver* backHBridge)
+ChassisControl::ChassisControl(HBridgeDriver* frontHbridge,HBridgeDriver* backHBridge)
 {
     _FrontHbridge = frontHbridge;
     _BackHBridge = backHBridge;
 }
 
-ChasisControl::~ChasisControl()
+ChassisControl::~ChassisControl()
 {
 }
 
-void ChasisControl::begin()
+void ChassisControl::begin()
 {
     _FrontHbridge->begin();
     _BackHBridge->begin();
 }
 
-void ChasisControl::Forward()
+void ChassisControl::Forward()
 {
     _FrontHbridge->moveForward();
     _BackHBridge->moveForward();
 }
 
-void ChasisControl::Backward()
+void ChassisControl::Backward()
 {
     _FrontHbridge->moveBackward();
     _BackHBridge->moveBackward();
 }
 
-void ChasisControl::Left()
+void ChassisControl::Left()
 {
     _FrontHbridge->turnLeft();
     _BackHBridge->turnRight();
 }
 
-void ChasisControl::Right()
+void ChassisControl::Right()
 {
     _FrontHbridge->turnRight();
     _BackHBridge->turnLeft();
 }
 
-void ChasisControl::Stop()
+void ChassisControl::Stop()
 {
     _FrontHbridge->stop();
     _BackHBridge->stop();

@@ -1,6 +1,7 @@
 // class that takes care of handling smallArm, bigArm and chassisControl object movements
-
+#include "BigArm.h"
 #include "ChassisControl.h"
+
 
 class RobotControl
 {
@@ -17,15 +18,12 @@ class RobotControl
             bigArmControl = bigArm;
         }
 
-    void handleChassis() {
-
+    void handleControl() 
+    {
+        bigArm.handleControl();
+        smallArm.handleControl();
+        chassis.handleControl();
     }
 
-    void handleSmallArm() {
 
-    }
-
-    void handleBigArm() {
-
-    }
 }
