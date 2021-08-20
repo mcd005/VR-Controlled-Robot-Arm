@@ -84,7 +84,9 @@ void setup()
 
 void loop() 
 {
-  robotControl.handleControl(controlDataJson);
+  RobotMovement movement = robotControl.handleControl(controlDataJson);
+
+  if (movement is)
   Serial2.flush();
 }
 
