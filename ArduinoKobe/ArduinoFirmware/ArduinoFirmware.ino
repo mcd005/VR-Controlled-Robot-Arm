@@ -1,8 +1,10 @@
 #include <ArduinoJson.h>
 
-#include "ChasisControl.h"
+#include "ChassisControl.h"
 #include "HBridgeDriver.h"
 #include "Arm.h"
+#include "SmallArm.h"
+#include "BigArm.h"
 
 #define DEBUG
 #define PiSerial Serial2
@@ -38,12 +40,14 @@ HBridgeDriver backHBridge(H2_ENA,
                           H2_ENB);
 
 
-ChasisControl chasisControl(&frontHbridge,&backHBridge);
+ChassisControl chassisControl(&frontHbridge,&backHBridge);
 
 // there should be two of these 
 Arm armControl("need to add PWM driver here")
+SmallArm smallArmControl()
+BigArm bigArmControl()
 
-RobotControl robotControl(&chasisControl,&armControl);
+RobotControl robotControl(&chasisControl,&smallArmControl, &bigArmControl);
 
 void setup() 
 {
