@@ -7,10 +7,10 @@
 
 Joint::Joint(String name, uint16_t startAngle, uint16_t pulseMin, uint16_t pulseMax, uint16_t channel, Adafruit_PWMServoDriver *pwmObject) :
     jointName(name),
-    currentAngle(startAngle),
+    currentPulseWidth(calculatePulseWidth(startAngle)),
     minPulseWidth(pulseMin),
     maxPulseWidth(pulseMax),
-    targetAngle(startAngle),
+    targetPulseWidth(calculatePulseWidth(startAngle)),
     jointChannel(channel),
     pwm(pwmObject)
 {
@@ -18,17 +18,17 @@ Joint::Joint(String name, uint16_t startAngle, uint16_t pulseMin, uint16_t pulse
 
 String Joint::setTargetAngle(int givenAngle)
 {
-    targetAngle = givenAngle;
-    return "\n" + jointName + " target angle set to " + String(targetAngle);
+    targetPulseWidth = calculatePulseWidth(givenAngle);
+    return "\n" + jointName + " target angle set to " + String(givenAngle);
 }
 
 void Joint::incrementPosition()
 {
-    if (currentAngle != targetAngle)
+    if (currentPulseWidth != targetPulseWidth)
     {
-        if (currentAngle < targetAngle) ++currentAngle;
-        if (currentAngle > targetAngle) --currentAngle;
-        pwm->setPWM(jointChannel, PULSE_ON, calculatePulseWidth(currentAngle));
+        if (currentPulseWidth < targetPulseWidth) ++currentPulseWidth;
+        if (currentPulseWidth > targetPulseWidth) --currentPulseWidth;
+        pwm->setPWM(jointChannel, PULSE_ON, currentPulseWidth);
         delay(INCREMENT_DELAY_USECS);
     }
 }
