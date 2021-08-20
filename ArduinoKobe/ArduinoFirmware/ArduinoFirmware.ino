@@ -10,19 +10,20 @@
 #define PiSerial Serial2
 #define Debug Serial
 
-#define H1_ENA 1
-#define H1_IN1 2
-#define H1_IN2 3
-#define H1_IN3 4
-#define H1_IN4 5
-#define H1_ENB 6
+#define H1_ENA 35
+#define H1_IN1 32
+#define H1_IN2 34
+#define H1_IN3 36
+#define H1_IN4 38
+#define H1_ENB 37
 
-#define H2_ENA 7
-#define H2_IN1 8
-#define H2_IN2 9
-#define H2_IN3 10
-#define H2_IN4 11
-#define H2_ENB 12
+
+#define H2_ENA 25
+#define H2_IN1 22
+#define H2_IN2 24
+#define H2_IN3 26
+#define H2_IN4 28
+#define H2_ENB 27
 
 
 HBridgeDriver frontHbridge(H1_ENA,
@@ -54,13 +55,12 @@ void setup()
 
 DynamicJsonDocument controlDataJson(1024);
 
-
 void setup() 
 {
   Debug.begin(9600);
   PiSerial.begin(9600);
 
-  chasisControl.begin();
+  chassisControl.begin();
 }
 
 void loop() 
@@ -71,8 +71,8 @@ void loop()
       DeserializationError error = deserializeJson(controlDataJson, PiSerial);
       if (error) 
       {
-        Serial.print(F("deserializeJson() failed: "));
-        Serial.println(error.f_str());
+        Debug.print(F("deserializeJson() failed: "));
+        Debug.println(error.f_str());
         return;
       }
   }
