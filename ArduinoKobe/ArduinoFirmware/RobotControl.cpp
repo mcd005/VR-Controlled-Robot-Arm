@@ -1,8 +1,8 @@
 // class that takes care of handling smallArm, bigArm and chassisControl object movements
 // has a function that returns which movement should be actuated
-#include <map>
 
 #include "BigArm.h"
+#include "SmallArm.h"
 #include "ChassisControl.h"
 
 /*
@@ -15,64 +15,73 @@ class RobotControl
 
     string jsonDic;
 
-    int WristFlexor;
+    int bigArmWristFlexor;
     int bigArmClaw;
     int bigArmWristRotator;
     int bigArmElbow;
     int bigArmShoulder;
     int chassisDirection;
     int smallArmDirection;
-    
-    // dictionary that holds the movements that robot should do at this time:
-    std::map<std::string, std::string> movementsNeeded;
-    movementsNeeded["chassis"] = 6;
-    movemensNeeded["smallArm"] = 2;
-    movementNeeded["bigArm"] = std::map<std::string, std::int>;
+
+    BigArm bigArm;
+    SmallArm smallArm;
+    ChassisControl chassis;
 
 
     public:
-        RobotControl(string* jsonData) 
+        RobotControl(BigArm* bigArmControl, SmallArm* smallArmControl, ChassisControl* chassisControl) 
         {
-            jsonDic = jsonData;
+            bigArm = bigArmControl;
+            smallArm = smallArmControl;
+            chassis = chassisControl;
         }
 
     // parse the data into the three different possible robot functionalities
-    string handleControl() 
-    {
-        // will return which data has
-        WristFlexor = jsonDic["bigArmWristFlexor"].as<int>();
+    public void handleControl(string* jsonData) 
+    {   
+        // be able to handle if no data is sent 
+
+        // 1. Parse the data
+        parseData(&jsonData);
+
+        // 2. Actuate the different parts
+        handleBigArmData();
+        handleChassisData();
+        handleSmallArmData();
+    }
+
+    // parses the data
+    void parseData(string* jsonData) {
+        bigArmWristFlexor = jsonDic["bigArmWristFlexor"].as<int>();
         bigArmClaw = jsonDic["bigArmClaw"].as<int>();
         bigArmWristRotator = jsonDic["bigArmWristRotator"].as<int>();
         bigArmElbow = jsonDic["bigArmElbow"].as<int>();
         bigArmShoulder = jsonDic["bigArmShoulder"].as<int>();
         chassisDirection = jsonDic["chassisDirection"].as<int>();
         smallArmDirection = jsonDic["smallArmVerticalDirection"].as<int>();
-
-        return "(chassis, forward)"
-        return movementNeeded;
     }
 
     void handleChassisData() {
         if(chassisDirection == 0) {
-          chassisControl.Forward();
+            chassis.Forward();
         }
         else if(chassisDirection == 1) {
-            chassisControl.Backward();
+            chassis.Backward();
         }
         else if(chassisDirection == 2) {
-            chassisControl.Left();
+            chassis.Left();
         }
         else if(chassisDirection == 3) {
-            chassisControl.Right();
+            chassis.Right();
         }
         else if(chassisDirection == 4) {
-            chassisControl.RotateRight();
+            chassis.RotateRight();
         }
         else if(chassisDirection == 5) {
-            chassisControl.RotateLeft();
+            chassis.RotateLeft();
         }
-        else if(chassisDirection ==6) {
-            chassisControl.Stop();
+        else if(chassisDirection == 6) {
+            chassis.Stop();
         }
         else {
             Serial.println("Nothing");
@@ -81,16 +90,23 @@ class RobotControl
 
     void handleSmallArmData() {
         if (smallArmDirection == 0 ) {
-            smallArmControl.UP();
+            smallArm.UP();
         } else if (smallArmDirection == 1 ) {
-            smallArmControl.DOWN();
+            smallArm.DOWN();
         } else {
+            smallArm.Stop();
             Serial.println("Nothing");
         }
     }
 
     void handleBigArmData() {
-        // Joints data ... 
+
+        // set the angles for each of the Joints
+        bigArm.setJointsTargetAngles(&bigArmWristFlexor, &bigArmClaw, &bigArmWristRotator, &bigArmElbow, &bigArmShoulder);
+
+        // increment each servo to their angles
+        bigArm.doJointsMovement();
+
     }
 
 

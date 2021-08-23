@@ -8,6 +8,7 @@
 #include "SmallArm.h"
 #include "BigArm.h"
 #include "Joint.hpp"
+#include "RobotControl.h"
 
 #define DEBUG
 #define Debug Serial
@@ -48,23 +49,28 @@ HBridgeDriver backHBridge(H2_ENA,
                           H2_ENB);
 
 
-ChassisControl chassisControl(&frontHbridge,&backHBridge);
+
 
 Adafruit_PWMServoDriver pwm = Adafruit_PWMServoDriver();
 
-Joint waist("waist", 90, 150, 450, 0, &pwm);
+// find out DEFAULT positions
+Joint waist("waist", 0, 150, 450, 0, &pwm);
 Joint shoulder("shoulder", 0, 150, 450,  1, &pwm);
 Joint elbow("elbow", 0, 150, 450, 2, &pwm);
 Joint pitch("pitch", 0, 150, 450, 3, &pwm);
 Joint roll("roll", 0, 150, 450, 4, &pwm);
 Joint claw("claw", 0, 150, 450, 5, &pwm);
 
-BigArm bigArm(&waist,&shoulder,&elbow,&pitch,&roll,&claw); 
+// should they be in the setup?  (Lose pwr, reset, etc...)
+BigArm bigArmControl(&waist,&shoulder,&elbow,&pitch,&roll,&claw); 
+SmallArm smallArmControl;
+ChassisControl chassisControl(&frontHbridge,&backHBridge);
 
-RobotControl robotControl(&chasisControl,&smallArmControl, &bigArm);
+RobotControl robotControl(&chasisControl,&smallArmControl, &bigArmControl);
 
 DynamicJsonDocument controlDataJson(1024);
 
+// when reset is called is just setup called or is the entire
 void setup() 
 {
   Debug.begin(9600);
@@ -77,32 +83,37 @@ void setup()
   pwm.setPWMFreq(SERVO_FREQ);
 
   bigArm.begin();
-
+  smallArmControl.begin();
   chassisControl.begin();
-
 }
 
 void loop() 
 {
-  RobotMovement movement = robotControl.handleControl(controlDataJson);
+  deserializeJsonString(); 
 
-  if (movement is)
-  Serial2.flush();
+  // handles the data
+  robotControl.handleControl(controlDataJson);
+
+  // removes data in the serial buffer
+  Bluetooth.flush();
 }
 
-void serialEvent1() 
+void deserializeJsonString() 
 {
-  while (Serial1.available()) 
+  while (Bluetooth.available()) 
   {
-    if (PiSerial.available() > 0)
+    if (Bluetooth.available() > 0)
     {   
-        DeserializationError error = deserializeJson(controlDataJson, PiSerial);
+        DeserializationError error = deserializeJson(controlDataJson, Bluetooth);
         if (error) 
         {
           Debug.print(F("deserializeJson() failed: "));
           Debug.println(error.f_str());
+          // if the data is not deserialise what happens ??? Old data?
+          // see what deserializeJson does ?? nothing?
           return;
         }
+         
     }
   }
 }

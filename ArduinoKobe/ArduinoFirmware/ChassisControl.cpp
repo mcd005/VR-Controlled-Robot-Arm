@@ -16,6 +16,10 @@ void ChassisControl::begin()
     _BackHBridge->begin();
 }
 
+/*
+* Unit test: https://www.arduino.cc/reference/en/language/functions/digital-io/digitalread/
+*/
+
 void ChassisControl::Forward()
 {
     _FrontHbridge->moveForward();
@@ -38,6 +42,18 @@ void ChassisControl::Right()
 {
     _FrontHbridge->turnRight();
     _BackHBridge->turnLeft();
+}
+
+void ChassisControl::RotateLeft()
+{
+    // _FrontHbridge->turnLeft();
+    // _BackHBridge->turnRight();
+}
+
+void ChassisControl::RotateRight()
+{
+    // _FrontHbridge->turnRight();
+    // _BackHBridge->turnLeft();
 }
 
 void ChassisControl::Stop()

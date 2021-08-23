@@ -22,6 +22,10 @@ public:
     Joint* _pitch;
     Joint* _roll;
     Joint* _claw;
+
+    void setJointsTargetAngles(int bigArmWristFlexor, int bigArmClaw, int bigArmWristRotator, int bigArmElbow, int bigArmShoulder);
+
+    void doJointsMovement();
 };
 
 

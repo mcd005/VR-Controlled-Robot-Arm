@@ -16,6 +16,8 @@ public:
     void Backward();
     void Left();
     void Right();
+    void RotateRight();
+    void RotateLeft();
     void Stop();
 
 private:
