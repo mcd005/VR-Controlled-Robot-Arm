@@ -5,6 +5,23 @@
 #include "SmallArm.h"
 #include "ChassisControl.h"
 
+enum class ChassisDirection
+{
+    FORWARD = 0,
+    BACKWARD,
+    LEFT,
+    RIGHT,
+    ROTATE_RIGHT,
+    ROTATE_LEFT,
+    STOP
+}
+
+enum class SmallArmData
+{
+    UP = 0,
+    DOWN
+}
+
 class RobotControl
 {
     public:

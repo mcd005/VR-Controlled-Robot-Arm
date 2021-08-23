@@ -61,7 +61,7 @@ Joint pitch("pitch", 0, 150, 450, 3, &pwm);
 Joint roll("roll", 0, 150, 450, 4, &pwm);
 Joint claw("claw", 0, 150, 450, 5, &pwm);
 
-// should they be in the setup?  (Lose pwr, reset, etc...)
+// should they be in the setup?  (Lose pwr, reset, etc...) -- we need to address these comments
 BigArm bigArmControl(&waist,&shoulder,&elbow,&pitch,&roll,&claw); 
 SmallArm smallArmControl;
 ChassisControl chassisControl(&frontHbridge,&backHBridge);
@@ -69,8 +69,9 @@ ChassisControl chassisControl(&frontHbridge,&backHBridge);
 RobotControl robotControl(&chasisControl,&smallArmControl, &bigArmControl);
 
 DynamicJsonDocument controlDataJson(1024);
+DeserializationError deserializationError;
 
-// when reset is called is just setup called or is the entire
+// when reset is called is just setup called or is the entire - it powers on and off
 void setup() 
 {
   Debug.begin(9600);
@@ -89,23 +90,24 @@ void setup()
 
 void loop() 
 {
-  deserializeJsonString(); 
+  if (isDeserializeJsonStringSuccessful())
+  {
+    robotControl.handleControl(controlDataJson);
+  }
 
-  // handles the data
-  robotControl.handleControl(controlDataJson);
-
-  // removes data in the serial buffer
   Bluetooth.flush();
 }
 
-void deserializeJsonString() 
+DeserializationError isDeserializeJsonStringSuccessful() 
 {
+  DeserializationError deserializationError;
+
   while (Bluetooth.available()) 
   {
     if (Bluetooth.available() > 0)
     {   
-        DeserializationError error = deserializeJson(controlDataJson, Bluetooth);
-        if (error) 
+        deserializationError = deserializeJson(controlDataJson, Bluetooth);
+        if (deserializationError) 
         {
           Debug.print(F("deserializeJson() failed: "));
           Debug.println(error.f_str());
@@ -116,4 +118,6 @@ void deserializeJsonString()
          
     }
   }
+
+  return deserializationError;
 }
