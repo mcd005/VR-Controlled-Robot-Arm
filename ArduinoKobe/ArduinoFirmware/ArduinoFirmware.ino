@@ -51,20 +51,19 @@ HBridgeDriver backHBridge(H2_ENA,
 
 
 
-Adafruit_PWMServoDriver pwm = Adafruit_PWMServoDriver();
-
-Adafruit_PWMServoDriver pwm2 = Adafruit_PWMServoDriver();
+Adafruit_PWMServoDriver pwmDriver1 = Adafruit_PWMServoDriver(0x40);
+Adafruit_PWMServoDriver pwmDriver2 = Adafruit_PWMServoDriver(0x41);
 
 // find out DEFAULT positions
-Joint waist("waist", 0, 150, 450, 0, &pwm);
-Joint shoulder("shoulder", 0, 150, 450,  1, &pwm);
-Joint elbow("elbow", 0, 150, 450, 2, &pwm);
-Joint pitch("pitch", 0, 150, 450, 3, &pwm);
-Joint roll("roll", 0, 150, 450, 4, &pwm);
-Joint claw("claw", 0, 150, 450, 5, &pwm);
+Joint waist("waist", 0, 150, 450, 0, &pwmDriver2);  //big 
+Joint shoulder("shoulder", 0, 150, 450,  1, &pwmDriver1); // big
+Joint elbow("elbow", 0, 150, 450, 2, &pwmDriver1); // big
+Joint pitch("pitch", 0, 150, 450, 3, &pwmDriver1); // small
+Joint roll("roll", 0, 150, 450, 4, &pwmDriver2); // small
+Joint claw("claw", 0, 150, 450, 5, &pwmDriver1); // small
 
-Joint servo1("servo1", 0, 150, 450, 5, &pwm2);
-Joint servo2();
+Joint servo1("servo1", 0, 150, 450, 5, &pwmDriver2); // big
+Joint servo2("servo2", 0, 150, 450, 5, &pwmDriver2); // small
 
 
 // should they be in the setup?  (Lose pwr, reset, etc...) -- we need to address these comments
