@@ -1,4 +1,5 @@
 import math
+import sys
 
 # Below is the robot arm. The dashes are the forearm (parallel with the x-axis), the pipes are the upper arm (parallel with the y-axis)
 # The shoulder is the "0" at the base of the upper arm. The elbow is the "0" at the connection between the upper arm and forearm. The wrist joint is at the point of the ">"
@@ -21,45 +22,21 @@ import math
 #  This angle is phi. It is the angle between the x-axis and the virtual vector. It is 90 - alpha
 
 class InverseKinematics():
-    def __init__(self, upper_arm_length=105, forearm_length=110, shoulder_rest=90, elbow_rest=90):
+    def __init__(self, upper_arm_length=105, forearm_length=110, shoulder_rest_angle=90, elbow_rest_angle=90):
         self.upper_arm_length = upper_arm_length
         self.forearm_length = forearm_length
-        self.alpha = self.get_angle_from_cosine_rule(self.r, self.upper_arm_length, self.forearm_length)
-        self.beta = self.get_angle_from_cosine_rule(self.upper_arm_length, self.forearm_length, self.r)
-        self.r = self.compute_desired_length_of_virtual_vector(upper_arm_length, forearm_length)
-        self.phi
-        self.shoulder_angle = shoulder_rest
-        self.elbow_angle = elbow_rest
+        self.shoulder_rest_angle = math.radians(shoulder_rest_angle)
+        self.elbow_rest_angle = math.radians(elbow_rest_angle)
+        self.phi_at_rest = self.compute_phi(0, 0)
 
     def compute_servo_angles(self, x, y):
-        self.r = self.compute_desired_length_of_virtual_vector(x, y)
-        self.update_angles_to_change_virtual_vector_length()
-        self.convert_triangle_angles_to_servo_angles()
-        print(f"W90,S{self.shoulder_angle},E{self.elbow_angle}")
+        phi = self.compute_phi(x, y)
+        shoulder_angle = int(math.degrees(self.shoulder_rest_angle + (phi - self.phi_at_rest)))
+        print(f"S{shoulder_angle}")
 
-    @staticmethod
-    def compute_desired_length_of_virtual_vector(x, y):
-        return math.sqrt(x**2 + y**2)
-
-    @staticmethod
-    def compute_phi(x, y):
-        return math.atan(y/x)
-        
-    def update_angles_to_change_virtual_vector_length(self):
-       '''
-       We use the cosine rule here. Given three known sides we can calculate our unknown angles
-       '''
-       self.alpha = self.get_angle_from_cosine_rule(self.r, self.upper_arm_length, self.forearm_length)
-       self.beta = self.get_angle_from_cosine_rule(self.upper_arm_length, self.forearm_length, self.r)
-    
-    def convert_triangle_angles_to_servo_angles(self):
-       self.elbow_angle = math.degrees(self.beta)
-       self.shoulder_angle = math.degrees() 
-
-    @staticmethod
-    def get_angle_from_cosine_rule(enclosing_len_A, enclosing_len_B, opposite_len_C):
-        return math.acos((enclosing_len_A**2 + enclosing_len_B**2 - opposite_len_C**2)/(2 * enclosing_len_A * enclosing_len_B))
+    def compute_phi(self, x, y):
+        return math.atan((y + self.upper_arm_length)/(x + self.forearm_length))
 
 if __name__ == "__main__":
-    ik = InverseKinematics()
-    print(ik.compute_desired_length_of_virtual_vector(3, 4))
+    ik = InverseKinematics(upper_arm_length=100, forearm_length=100)
+    ik.compute_servo_angles(0 , 0)
