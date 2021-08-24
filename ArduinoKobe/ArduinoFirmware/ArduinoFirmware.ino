@@ -53,6 +53,8 @@ HBridgeDriver backHBridge(H2_ENA,
 
 Adafruit_PWMServoDriver pwm = Adafruit_PWMServoDriver();
 
+Adafruit_PWMServoDriver pwm2 = Adafruit_PWMServoDriver();
+
 // find out DEFAULT positions
 Joint waist("waist", 0, 150, 450, 0, &pwm);
 Joint shoulder("shoulder", 0, 150, 450,  1, &pwm);
@@ -61,15 +63,20 @@ Joint pitch("pitch", 0, 150, 450, 3, &pwm);
 Joint roll("roll", 0, 150, 450, 4, &pwm);
 Joint claw("claw", 0, 150, 450, 5, &pwm);
 
+Joint servo1("servo1", 0, 150, 450, 5, &pwm2);
+Joint servo2();
+
+
 // should they be in the setup?  (Lose pwr, reset, etc...) -- we need to address these comments
 BigArm bigArmControl(&waist,&shoulder,&elbow,&pitch,&roll,&claw); 
-SmallArm smallArmControl;
+
+SmallArm smallArmControl(&servo1,&servo2);
+
 ChassisControl chassisControl(&frontHbridge,&backHBridge);
 
-RobotControl robotControl(&chasisControl,&smallArmControl, &bigArmControl);
+RobotControl robotControl(&chassisControl,&smallArmControl, &bigArmControl);
 
 DynamicJsonDocument controlDataJson(1024);
-DeserializationError deserializationError;
 
 // when reset is called is just setup called or is the entire - it powers on and off
 void setup() 
@@ -113,11 +120,9 @@ DeserializationError isDeserializeJsonStringSuccessful()
           Debug.println(error.f_str());
           // if the data is not deserialise what happens ??? Old data?
           // see what deserializeJson does ?? nothing?
-          return;
+          //return;
         }
-         
     }
   }
-
   return deserializationError;
 }

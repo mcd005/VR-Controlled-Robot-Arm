@@ -1,5 +1,6 @@
 // class that takes care of handling smallArm, bigArm and chassisControl object movements
 // has a function that returns which movement should be actuated
+#include <ArduinoJson.h>
 
 #include "BigArm.h"
 #include "SmallArm.h"
@@ -23,12 +24,12 @@ RobotControl::RobotControl(BigArm* bigArmControl, SmallArm* smallArmControl, Cha
 }
 
 // parse the data into the three different possible robot functionalities
-void RobotControl::handleControl(string* jsonData) // I dont think its a json string - its a DynamicJsonDocument - this where its trickey because the library is installed in arduino
+void RobotControl::handleControl(DynamicJsonDocument jsonData) // I dont think its a json string - its a DynamicJsonDocument - this where its trickey because the library is installed in arduino
 {   
     // be able to handle if no data is sent 
 
     // 1. Parse the data
-    parseData(&jsonData);
+    parseData(jsonData);
 
     // 2. Actuate the different parts
     handleBigArmData();
@@ -37,7 +38,7 @@ void RobotControl::handleControl(string* jsonData) // I dont think its a json st
 }
 
     // parses the data
-void RobotControl::parseData(string* jsonData) 
+void RobotControl::parseData(DynamicJsonDocument jsonData) 
 {
     bigArmWristFlexor = jsonDic["bigArmWristFlexor"].as<int>();
     bigArmClaw = jsonDic["bigArmClaw"].as<int>();
