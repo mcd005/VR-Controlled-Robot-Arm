@@ -48,9 +48,6 @@ HBridgeDriver backHBridge(H2_ENA,
                           H2_IN4,
                           H2_ENB);
 
-
-
-
 Adafruit_PWMServoDriver pwmDriver1 = Adafruit_PWMServoDriver(0x40);
 Adafruit_PWMServoDriver pwmDriver2 = Adafruit_PWMServoDriver(0x41);
 
@@ -119,7 +116,7 @@ DeserializationError isDeserializeJsonStringSuccessful()
           Debug.println(error.f_str());
           // if the data is not deserialise what happens ??? Old data?
           // see what deserializeJson does ?? nothing?
-          //return;
+          return deserializationError;
         }
     }
   }
