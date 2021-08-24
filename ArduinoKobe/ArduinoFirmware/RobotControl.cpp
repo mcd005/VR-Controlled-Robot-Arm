@@ -94,11 +94,6 @@ void RobotControl::handleSmallArmData()
     else if (SmallArmData::DOWN == smallArmDirection) 
     {
         smallArm.DOWN();
-    } 
-    else 
-    {
-        smallArm.Stop();
-        Serial.println("Nothing");
     }
 }
 
@@ -110,4 +105,5 @@ void RobotControl::handleBigArmData()
     // increment each servo to their angles
     bigArm.doJointsMovement();
 }
+
 

@@ -33,6 +33,9 @@
 #define H2_IN4 28
 #define H2_ENB 27
 
+#define SMALL_ARM_MAX_PULSE_WIDTH 200 // angle of 20 degree 
+#define SMALL_ARM_MIN_PULSE_WIDTH 150 // angle of 0
+
 
 HBridgeDriver frontHbridge(H1_ENA,
                           H1_IN1,
@@ -48,8 +51,9 @@ HBridgeDriver backHBridge(H2_ENA,
                           H2_IN4,
                           H2_ENB);
 
-Adafruit_PWMServoDriver pwmDriver1 = Adafruit_PWMServoDriver(0x40);
-Adafruit_PWMServoDriver pwmDriver2 = Adafruit_PWMServoDriver(0x41);
+
+Adafruit_PWMServoDriver pwmDriver1 = Adafruit_PWMServoDriver(0x40); // has default adress
+Adafruit_PWMServoDriver pwmDriver2 = Adafruit_PWMServoDriver(0x41); // the address of the pwmdriver needs to be changed
 
 // find out DEFAULT positions
 Joint waist("waist", 0, 150, 450, 0, &pwmDriver2);  //big 
@@ -59,14 +63,13 @@ Joint pitch("pitch", 0, 150, 450, 3, &pwmDriver1); // small
 Joint roll("roll", 0, 150, 450, 4, &pwmDriver2); // small
 Joint claw("claw", 0, 150, 450, 5, &pwmDriver1); // small
 
-Joint servo1("servo1", 0, 150, 450, 5, &pwmDriver2); // big
-Joint servo2("servo2", 0, 150, 450, 5, &pwmDriver2); // small
+Joint baseServo("baseServo", 0, 150, SMALL_ARM_MAX_PULSE_WIDTH, 6, &pwmDriver2); // big
+Joint bendServo("bendServo", 0, 150, SMALL_ARM_MAX_PULSE_WIDTH, 7, &pwmDriver2); // small
 
 
-// should they be in the setup?  (Lose pwr, reset, etc...) -- we need to address these comments
 BigArm bigArmControl(&waist,&shoulder,&elbow,&pitch,&roll,&claw); 
 
-SmallArm smallArmControl(&servo1,&servo2);
+SmallArm smallArmControl(&baseServo, &bendServo);
 
 ChassisControl chassisControl(&frontHbridge,&backHBridge);
 

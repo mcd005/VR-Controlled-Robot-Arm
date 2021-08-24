@@ -1,21 +1,20 @@
 #pragma once
 
 #include "HBridgeDriver.h"
+#include "Joint.hpp"
 
 class SmallArm
 {
 
 public:
-    SmallArm();
+    SmallArm(Joint* baseServo, Joint* bendServo);
 
     ~SmallArm();
 
-    void begin();
+    Joint* _baseServo;
+    Joint* _bendServo;
 
     void UP();
     void DOWN();
-    void Stop();
 
-private:
-    
 };

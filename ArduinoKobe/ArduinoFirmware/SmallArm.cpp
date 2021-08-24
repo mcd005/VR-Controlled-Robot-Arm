@@ -1,8 +1,10 @@
 #include "SmallArm.h"
 
-SmallArm::SmallArm()
-{
 
+SmallArm::SmallArm(Joint* baseServo, Joint* bendServo)
+{
+    _baseServo = baseServo;
+    _bendServo = bendServo;
 }
 
 SmallArm::~SmallArm() 
@@ -10,22 +12,12 @@ SmallArm::~SmallArm()
 
 }
 
-void SmallArm::begin()
-{
-
-}
-
 void SmallArm::UP()
-{
-
+{   
+    _bendServo.increaseAngle();
 }
 
 void SmallArm::DOWN()
 {
-
-}
-
-void SmallArm::Stop()
-{
-    
+    _bendServo.decreaseAngle();
 }

@@ -36,7 +36,32 @@ void Joint::incrementPosition()
     }
 }
 
+
 int Joint::calculatePulseWidth(uint16_t angle)
 {
     return map(angle, 0, 180, minPulseWidth, maxPulseWidth);
+}
+
+/*
+ NOT IMPLEMENTED IN THE BEST POSSIBLE WAY :/
+ THESE METHODs should only receive a max_angle value
+ and increment/decrement the angle whilst button is pressed (so no target pulse_widtho)
+*/
+
+void Joint::increaseAngle()
+{   
+    if (currentPulseWidth < pulseMax) {
+        ++currentPulseWidth;
+        pwm->setPWM(jointChannel, PULSE_ON, currentPulseWidth);
+        delay(INCREMENT_DELAY_USECS);
+    }
+}
+
+void Joint::decreaseAngle()
+{   
+    if (currentPulseWidth > pulseMin) {
+        --currentPulseWidth;
+        pwm->setPWM(jointChannel, PULSE_ON, currentPulseWidth);
+        delay(INCREMENT_DELAY_USECS);
+    }
 }
