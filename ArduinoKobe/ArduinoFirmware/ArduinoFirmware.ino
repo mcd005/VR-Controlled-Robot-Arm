@@ -4,10 +4,9 @@
 
 #include "ChassisControl.h"
 #include "HBridgeDriver.h"
-#include "Arm.h"
 #include "SmallArm.h"
 #include "BigArm.h"
-#include "Joint.hpp"
+#include "Joint.h"
 #include "RobotControl.h"
 
 #define DEBUG
@@ -86,11 +85,13 @@ void setup()
   Bluetooth.begin(9600);
   Bluetooth.setTimeout(10);
 
-  pwm.begin();
-  pwm.setPWMFreq(SERVO_FREQ);
+  pwmDriver1.begin();
+  pwmDriver1.setPWMFreq(SERVO_FREQ);
 
-  bigArm.begin();
-  smallArmControl.begin();
+  pwmDriver2.begin();
+  pwmDriver2.setPWMFreq(SERVO_FREQ);
+  
+  bigArmControl.begin();
   chassisControl.begin();
 }
 

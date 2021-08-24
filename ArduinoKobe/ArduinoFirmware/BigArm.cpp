@@ -10,7 +10,8 @@ BigArm::BigArm(Joint* waist,
                             _elbow(elbow),
                             _pitch(pitch),
                             _roll(roll),
-                            _claw(claw),
+                            _claw(claw)
+                      
 {
     /// bit confusing that we are using different names ... 
 }
@@ -39,4 +40,3 @@ BigArm::doJointsMovement()
     _roll.incrementPosition();
     _claw.incrementPosition();
 }
-

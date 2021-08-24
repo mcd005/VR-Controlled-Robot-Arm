@@ -16,7 +16,7 @@ public:
     Joint(String name, uint16_t startAngle, uint16_t minPulse, uint16_t maxPulse, uint16_t channel, Adafruit_PWMServoDriver* pwmObject); 
     String setTargetAngle(int givenAngle); 
     void incrementPosition(); 
-    void timeIncreaseAngle()
-    void timeDecreaseAngle()
+    void increaseAngle();
+    void decreaseAngle();
     int Joint::calculatePulseWidth(uint16_t angle);
 };

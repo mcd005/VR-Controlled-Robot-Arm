@@ -1,5 +1,5 @@
 
-#include "Joint.hpp"
+#include "Joint.h"
 
 class BigArm
 {
@@ -27,6 +27,3 @@ public:
 
     void doJointsMovement();
 };
-
-
-

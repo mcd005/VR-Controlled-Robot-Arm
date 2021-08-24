@@ -44,7 +44,7 @@ class RobotControl
         SmallArm smallArm;
         ChassisControl chassis;
 
-        void parseData(string* jsonData);
+        void parseData(DynamicJsonDocument* jsonData);
         void handleChassisData();
         void handleSmallArmData();
         void handleBigArmData();

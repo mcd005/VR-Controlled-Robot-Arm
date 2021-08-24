@@ -100,10 +100,8 @@ void RobotControl::handleSmallArmData()
 void RobotControl::handleBigArmData() 
 {
     // set the angles for each of the Joints
-    bigArm.setJointsTargetAngles(&bigArmWristFlexor, &bigArmClaw, &bigArmWristRotator, &bigArmElbow, &bigArmShoulder);
+    bigArm.setJointsTargetAngles(bigArmWristFlexor, bigArmClaw, bigArmWristRotator, bigArmElbow, bigArmShoulder);
 
     // increment each servo to their angles
     bigArm.doJointsMovement();
 }
-
-
