@@ -11,8 +11,8 @@ public:
 
     ~SmallArm();
 
-    Joint _baseServo;
-    Joint _bendServo;
+    Joint* _baseServo;
+    Joint* _bendServo;
 
     void UP();
     void DOWN();

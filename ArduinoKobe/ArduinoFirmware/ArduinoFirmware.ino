@@ -72,7 +72,7 @@ SmallArm smallArmControl(&baseServo, &bendServo);
 
 ChassisControl chassisControl(&frontHbridge,&backHBridge);
 
-RobotControl robotControl(&chassisControl,&smallArmControl, &bigArmControl);
+RobotControl robotControl(&bigArmControl, &smallArmControl, &chassisControl);
 
 DynamicJsonDocument controlDataJson(1024);
 

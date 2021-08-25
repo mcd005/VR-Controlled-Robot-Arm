@@ -13,7 +13,7 @@ What if more than one is pressed simulatenously - I guess we need to do some bra
 */
 
 
-RobotControl::RobotControl(BigArm bigArmControl, SmallArm smallArmControl, ChassisControl chassisControl) 
+RobotControl::RobotControl(BigArm* bigArmControl, SmallArm* smallArmControl, ChassisControl* chassisControl) 
 {
     bigArm = bigArmControl;
     smallArm = smallArmControl;
@@ -51,31 +51,31 @@ void RobotControl::handleChassisData()
     // if chassis direction 
     if(static_cast<int>(ChassisDirection::FORWARD) == chassisDirection) 
     {
-        chassis.Forward();
+        chassis->Forward();
     }
     else if(static_cast<int>(ChassisDirection::BACKWARD) == chassisDirection) 
     {
-        chassis.Backward();
+        chassis->Backward();
     }
     else if(static_cast<int>(ChassisDirection::LEFT) == chassisDirection) 
     {
-        chassis.Left();
+        chassis->Left();
     }
     else if(static_cast<int>(ChassisDirection::RIGHT) == chassisDirection) 
     {
-        chassis.Right();
+        chassis->Right();
     }
     else if(static_cast<int>(ChassisDirection::ROTATE_RIGHT) == chassisDirection)
     {
-        chassis.RotateRight();
+        chassis->RotateRight();
     }
     else if(static_cast<int>(ChassisDirection::ROTATE_LEFT) == chassisDirection) 
     {
-        chassis.RotateLeft();
+        chassis->RotateLeft();
     }
     else if(static_cast<int>(ChassisDirection::STOP) == chassisDirection) 
     {
-        chassis.Stop();
+        chassis->Stop();
     }
     else 
     {
@@ -87,19 +87,19 @@ void RobotControl::handleSmallArmData()
 {
     if (static_cast<int>(SmallArmData::UP) == smallArmDirection) 
     {
-        smallArm.UP();
+        smallArm->UP();
     } 
     else if (static_cast<int>(SmallArmData::DOWN) == smallArmDirection) 
     {
-        smallArm.DOWN();
+        smallArm->DOWN();
     }
 }
 
 void RobotControl::handleBigArmData() 
 {
     // set the angles for each of the Joints
-    bigArm.setJointsTargetAngles(bigArmWristFlexor, bigArmClaw, bigArmWristRotator, bigArmElbow, bigArmShoulder);
+    bigArm->setJointsTargetAngles(bigArmWristFlexor, bigArmClaw, bigArmWristRotator, bigArmElbow, bigArmShoulder);
 
     // increment each servo to their angles
-    bigArm.doJointsMovement();
+    bigArm->doJointsMovement();
 }

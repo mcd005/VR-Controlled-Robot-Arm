@@ -1,3 +1,5 @@
+#pragma once
+
 #include <Adafruit_PWMServoDriver.h>
 #include <Arduino.h>
 #include <Wire.h>
@@ -18,5 +20,5 @@ public:
     void incrementPosition(); 
     void increaseAngle();
     void decreaseAngle();
-    int Joint::calculatePulseWidth(uint16_t angle);
+    int calculatePulseWidth(uint16_t angle);
 };

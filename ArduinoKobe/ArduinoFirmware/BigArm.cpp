@@ -20,23 +20,23 @@ BigArm::~BigArm()
 {
 }
 
-BigArm::setJointsTargetAngles(int bigArmWristFlexor, int bigArmClaw, int bigArmWristRotator, int bigArmElbow, int bigArmShoulder)
+void BigArm::setJointsTargetAngles(int bigArmWristFlexor, int bigArmClaw, int bigArmWristRotator, int bigArmElbow, int bigArmShoulder)
 {
-    _waist.setJointsTargetAngles(0);
-    _shoulder.setJointsTargetAngles(bigArmShoulder);
-    _elbow.setJointsTargetAngles(bigArmElbow);
-    _pitch.setJointsTargetAngles(bigArmWristFlexor); // not sure about the names!!!
-    _roll.setJointsTargetAngles(bigArmWristRotator);
-    _claw.setJointsTargetAngles(bigArmClaw);
+    _waist->setTargetAngle(0);
+    _shoulder->setTargetAngle(bigArmShoulder);
+    _elbow->setTargetAngle(bigArmElbow);
+    _pitch->setTargetAngle(bigArmWristFlexor); // not sure about the names!!!
+    _roll->setTargetAngle(bigArmWristRotator);
+    _claw->setTargetAngle(bigArmClaw);
 
 }
 
-BigArm::doJointsMovement()
+void BigArm::doJointsMovement()
 {
-    _waist.incrementPosition();
-    _shoulder.incrementPosition();
-    _elbow.incrementPosition();
-    _pitch.incrementPosition(); // not sure about the names!!!
-    _roll.incrementPosition();
-    _claw.incrementPosition();
+    _waist->incrementPosition();
+    _shoulder->incrementPosition();
+    _elbow->incrementPosition();
+    _pitch->incrementPosition(); // not sure about the names!!!
+    _roll->incrementPosition();
+    _claw->incrementPosition();
 }

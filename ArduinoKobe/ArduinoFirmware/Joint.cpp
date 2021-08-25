@@ -50,7 +50,7 @@ int Joint::calculatePulseWidth(uint16_t angle)
 
 void Joint::increaseAngle()
 {   
-    if (currentPulseWidth < pulseMax) {
+    if (currentPulseWidth < maxPulseWidth) {
         ++currentPulseWidth;
         pwm->setPWM(jointChannel, PULSE_ON, currentPulseWidth);
         delay(INCREMENT_DELAY_USECS);
@@ -59,7 +59,7 @@ void Joint::increaseAngle()
 
 void Joint::decreaseAngle()
 {   
-    if (currentPulseWidth > pulseMin) {
+    if (currentPulseWidth > minPulseWidth) {
         --currentPulseWidth;
         pwm->setPWM(jointChannel, PULSE_ON, currentPulseWidth);
         delay(INCREMENT_DELAY_USECS);

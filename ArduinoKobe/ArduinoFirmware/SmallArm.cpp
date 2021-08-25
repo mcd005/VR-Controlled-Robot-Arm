@@ -9,15 +9,14 @@ SmallArm::SmallArm(Joint* baseServo, Joint* bendServo)
 
 SmallArm::~SmallArm() 
 {
-
 }
 
 void SmallArm::UP()
 {   
-    _bendServo.increaseAngle();
+    _bendServo->increaseAngle();
 }
 
 void SmallArm::DOWN()
 {
-    _bendServo.decreaseAngle();
+    _bendServo->decreaseAngle();
 }
