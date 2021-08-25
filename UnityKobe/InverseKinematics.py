@@ -61,4 +61,5 @@ class InverseKinematics():
 
 if __name__ == "__main__":
     ik = InverseKinematics(upper_arm_length=100, forearm_length=100)
+    # Plug in a coordinate that is x mm in front of and y mm below/above the tip of the robot arm claw
     ik.compute_servo_angles(10 , 10)
