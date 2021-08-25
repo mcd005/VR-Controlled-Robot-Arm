@@ -10,13 +10,10 @@
 /*
 How to prioritise between the different movements???
 What if more than one is pressed simulatenously - I guess we need to do some brain storming
-
-
-
 */
 
 
-RobotControl::RobotControl(BigArm* bigArmControl, SmallArm* smallArmControl, ChassisControl* chassisControl) 
+RobotControl::RobotControl(BigArm bigArmControl, SmallArm smallArmControl, ChassisControl chassisControl) 
 {
     bigArm = bigArmControl;
     smallArm = smallArmControl;
@@ -40,42 +37,43 @@ void RobotControl::handleControl(DynamicJsonDocument jsonData) // I dont think i
     // parses the data
 void RobotControl::parseData(DynamicJsonDocument jsonData) 
 {
-    bigArmWristFlexor = jsonDic["bigArmWristFlexor"].as<int>();
-    bigArmClaw = jsonDic["bigArmClaw"].as<int>();
-    bigArmWristRotator = jsonDic["bigArmWristRotator"].as<int>();
-    bigArmElbow = jsonDic["bigArmElbow"].as<int>();
-    bigArmShoulder = jsonDic["bigArmShoulder"].as<int>();
-    chassisDirection = jsonDic["chassisDirection"].as<int>();
-    smallArmDirection = jsonDic["smallArmVerticalDirection"].as<int>();
+    bigArmWristFlexor = jsonData["bigArmWristFlexor"].as<int>();
+    bigArmClaw = jsonData["bigArmClaw"].as<int>();
+    bigArmWristRotator = jsonData["bigArmWristRotator"].as<int>();
+    bigArmElbow = jsonData["bigArmElbow"].as<int>();
+    bigArmShoulder = jsonData["bigArmShoulder"].as<int>();
+    chassisDirection = jsonData["chassisDirection"].as<int>();
+    smallArmDirection = jsonData["smallArmVerticalDirection"].as<int>();
 }
 
 void RobotControl::handleChassisData() 
-{
-    if(ChassisDirection::FORWARD == chassisDirection) 
+{ 
+    // if chassis direction 
+    if(static_cast<int>(ChassisDirection::FORWARD) == chassisDirection) 
     {
         chassis.Forward();
     }
-    else if(ChassisDirection::BACKWARD == chassisDirection) 
+    else if(static_cast<int>(ChassisDirection::BACKWARD) == chassisDirection) 
     {
         chassis.Backward();
     }
-    else if(ChassisDirection::LEFT == chassisDirection) 
+    else if(static_cast<int>(ChassisDirection::LEFT) == chassisDirection) 
     {
         chassis.Left();
     }
-    else if(ChassisDirection::RIGHT == chassisDirection) 
+    else if(static_cast<int>(ChassisDirection::RIGHT) == chassisDirection) 
     {
         chassis.Right();
     }
-    else if(ChassisDirection::ROTATE_RIGHT == chassisDirection)
+    else if(static_cast<int>(ChassisDirection::ROTATE_RIGHT) == chassisDirection)
     {
         chassis.RotateRight();
     }
-    else if(ChassisDirection::ROTATE_LEFT == chassisDirection) 
+    else if(static_cast<int>(ChassisDirection::ROTATE_LEFT) == chassisDirection) 
     {
         chassis.RotateLeft();
     }
-    else if(ChassisDirection::STOP == chassisDirection) 
+    else if(static_cast<int>(ChassisDirection::STOP) == chassisDirection) 
     {
         chassis.Stop();
     }
@@ -87,11 +85,11 @@ void RobotControl::handleChassisData()
 
 void RobotControl::handleSmallArmData() 
 {
-    if (SmallArmData::UP == smallArmDirection) 
+    if (static_cast<int>(SmallArmData::UP) == smallArmDirection) 
     {
         smallArm.UP();
     } 
-    else if (SmallArmData::DOWN == smallArmDirection) 
+    else if (static_cast<int>(SmallArmData::DOWN) == smallArmDirection) 
     {
         smallArm.DOWN();
     }

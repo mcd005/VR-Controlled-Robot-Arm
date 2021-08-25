@@ -25,13 +25,11 @@ enum class SmallArmData
 class RobotControl
 {
     public:
-        RobotControl(BigArm* bigArmControl, SmallArm* smallArmControl, ChassisControl* chassisControl);
+        RobotControl(BigArm bigArmControl, SmallArm smallArmControl, ChassisControl chassisControl);
 
-        void handleControl(string* jsonData);
+        void handleControl(DynamicJsonDocument jsonData);
 
     private:
-        string jsonDic;
-
         int bigArmWristFlexor;
         int bigArmClaw;
         int bigArmWristRotator;
@@ -44,7 +42,8 @@ class RobotControl
         SmallArm smallArm;
         ChassisControl chassis;
 
-        void parseData(DynamicJsonDocument* jsonData);
+        
+        void parseData(DynamicJsonDocument jsonData);
         void handleChassisData();
         void handleSmallArmData();
         void handleBigArmData();

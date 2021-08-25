@@ -91,7 +91,7 @@ void setup()
   pwmDriver2.begin();
   pwmDriver2.setPWMFreq(SERVO_FREQ);
   
-  bigArmControl.begin();
+//  bigArmControl.begin();
   chassisControl.begin();
 }
 
@@ -117,7 +117,7 @@ DeserializationError isDeserializeJsonStringSuccessful()
         if (deserializationError) 
         {
           Debug.print(F("deserializeJson() failed: "));
-          Debug.println(error.f_str());
+          Debug.println(deserializationError.f_str());
           // if the data is not deserialise what happens ??? Old data?
           // see what deserializeJson does ?? nothing?
           return deserializationError;
