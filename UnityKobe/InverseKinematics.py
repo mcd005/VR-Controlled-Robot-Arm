@@ -25,7 +25,7 @@ import sys
 # Units of length are in mm, angles are given in degrees
 
 class InverseKinematics():
-    def __init__(self, upper_arm_length=105, forearm_length=325, shoulder_rest_angle=90, elbow_rest_angle=152):
+    def __init__(self, upper_arm_length=250, forearm_length=180, shoulder_rest_angle=78, elbow_rest_angle=90):
         self.upper_arm_length = upper_arm_length
         self.forearm_length = forearm_length
         self.shoulder_rest_angle = math.radians(shoulder_rest_angle)
@@ -60,6 +60,6 @@ class InverseKinematics():
         return  int(math.degrees(self.elbow_rest_angle + (beta - self.beta_rest_angle)))
 
 if __name__ == "__main__":
-    ik = InverseKinematics(upper_arm_length=100, forearm_length=100)
+    ik = InverseKinematics()
     # Plug in a coordinate that is x mm in front of and y mm below/above the tip of the robot arm claw
-    ik.compute_servo_angles(10 , 10)
+    ik.compute_servo_angles(-179 , 0)
