@@ -9,12 +9,12 @@
 
 Adafruit_PWMServoDriver pwm = Adafruit_PWMServoDriver();
 
-Joint waist("waist", 90, 150, 450, 0, &pwm);
-Joint shoulder("shoulder", 0, 150, 450,  1, &pwm);
-Joint elbow("elbow", 0, 150, 450, 2, &pwm);
-Joint pitch("pitch", 0, 150, 450, 3, &pwm);
-Joint roll("roll", 0, 150, 450, 4, &pwm);
-Joint claw("claw", 0, 150, 450, 5, &pwm);
+Joint waist("waist", 90, 100, 500, 0, &pwm);
+Joint shoulder("shoulder", 135, 100, 500, 1, &pwm);
+Joint elbow("elbow", 90, 100, 500, 2, &pwm);
+Joint pitch("pitch", 90, 150, 450, 3, &pwm);
+Joint roll("roll", 90, 150, 450, 4, &pwm);
+Joint claw("claw", 70, 150, 450, 5, &pwm);
 
 void setup()
 {
