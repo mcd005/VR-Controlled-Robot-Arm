@@ -29,9 +29,8 @@ struct JointAngleInfo
     const bool isInverted;
 };
 
-struct PwmShieldInfo
+struct JointPulseWidthInfo
 {
-    uint16_t jointChannel;
     uint16_t minPulseWidth;
     uint16_t maxPulseWidth;
 };

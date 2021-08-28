@@ -9,14 +9,24 @@
 
 Adafruit_PWMServoDriver pwm = Adafruit_PWMServoDriver();
 
-JointAngleInfo waistAngles
-{
-    90,     // Start angle
-    0,      // Min legal angle
-    180,    // Max legal angle
-    10,     // Offset angle (to account for misaligned servo horn etc)
-    true,   // Invert the given angle. In case a servo is on backwards for example
-};
+// Initialse servo pulse info as: {minPulseWidth, maxPulseWidth}
+JointPulseWidthInfo bigServos { 100, 500 };
+JointPulseWidthInfo smallServos { 150, 450 };
+
+// Initialise angle infor for each joint as 
+// {
+//     Start angle,
+//     Min legal angle,
+//     Max legal angle,
+//     Offset angle (to account for misaligned servo horn etc)
+//     Invert the given angle. In case a servo is on backwards for example
+// }
+
+JointAngleInfo waistAngles { 90, 0, 180, 10, true };
+JointAngleInfo shoulderAngles { 45, 0, 180, 0, true };
+JointAngleInfo elbowAngles { 90, 0, 120, 10, true };
+JointAngleInfo elbowAngles { 90, 0, 120, 10, true };
+
 
 Joint waist("waist", 90, 100, 500, 0, &pwm);
 Joint shoulder("shoulder", 135, 100, 500, 1, &pwm);
