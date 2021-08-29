@@ -10,8 +10,8 @@
 Adafruit_PWMServoDriver pwm = Adafruit_PWMServoDriver();
 
 // Initialse servo pulse info as: {minPulseWidth, maxPulseWidth}
-JointPulseWidthInfo bigServos { 100, 500 };
-JointPulseWidthInfo smallServos { 150, 450 };
+JointPulseWidthInfo bigServo { 100, 500 };
+JointPulseWidthInfo smallServo { 150, 450 };
 
 // Initialise angle infor for each joint as 
 // {
@@ -29,12 +29,13 @@ JointAngleInfo pitchAngles { 90, 0, 180, 10, true };
 JointAngleInfo rollAngles { 90, 0, 180, 10, true };
 JointAngleInfo clawAngles { 70, 20, 100, 0, false };
 
-Joint waist("waist", 90, 100, 500, 0, &pwm);
-Joint shoulder("shoulder", 135, 100, 500, 1, &pwm);
-Joint elbow("elbow", 90, 100, 500, 2, &pwm);
-Joint pitch("pitch", 90, 150, 450, 3, &pwm);
-Joint roll("roll", 90, 150, 450, 4, &pwm);
-Joint claw("claw", 70, 150, 450, 5, &pwm);
+// Instantiate all arm joints
+Joint waist("waist", waistAngles, bigServo, 0, &pwm);
+Joint shoulder("shoulder", shoulderAngles, bigServo, 1, &pwm);
+Joint elbow("elbow", elbowAngles, bigServo, 2, &pwm);
+Joint pitch("pitch", pitchAngles, smallServo, 3, &pwm);
+Joint roll("roll", rollAngles, smallServo, 4, &pwm);
+Joint claw("claw", clawAngles, smallServo, 5, &pwm);
 
 void setup()
 {

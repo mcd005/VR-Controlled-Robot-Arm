@@ -5,13 +5,13 @@
 #define PULSE_ON 15
 #define INCREMENT_DELAY_USECS 0
 
-Joint::Joint(String name, uint8_t startAngle, uint16_t pulseMin, uint16_t pulseMax, uint8_t channel, Adafruit_PWMServoDriver *pwmObject) :
+Joint::Joint(String name, JointAngleInfo angleInfo, JointPulseWidthInfo pulseWidthInfo, uint8_t channel, Adafruit_PWMServoDriver *pwmObject) :
     jointName(name),
-    currentPulseWidth(calculatePulseWidth(startAngle)),
-    targetPulseWidth(calculatePulseWidth(startAngle)),
+    currentPulseWidth(calculatePulseWidth(angleInfo.startAngle)),
+    targetPulseWidth(calculatePulseWidth(angleInfo.startAngle)),
+    minPulseWidth(pulseWidthInfo.minPulseWidth),
+    maxPulseWidth(pulseWidthInfo.maxPulseWidth),
     jointChannel(channel),
-    minPulseWidth(pulseMin),
-    maxPulseWidth(pulseMax),
     pwm(pwmObject)
 {
 }
