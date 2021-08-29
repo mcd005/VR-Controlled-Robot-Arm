@@ -25,8 +25,9 @@ JointPulseWidthInfo smallServos { 150, 450 };
 JointAngleInfo waistAngles { 90, 0, 180, 10, true };
 JointAngleInfo shoulderAngles { 45, 0, 180, 0, true };
 JointAngleInfo elbowAngles { 90, 0, 120, 10, true };
-JointAngleInfo elbowAngles { 90, 0, 120, 10, true };
-
+JointAngleInfo pitchAngles { 90, 0, 180, 10, true };
+JointAngleInfo rollAngles { 90, 0, 180, 10, true };
+JointAngleInfo clawAngles { 70, 20, 100, 0, false };
 
 Joint waist("waist", 90, 100, 500, 0, &pwm);
 Joint shoulder("shoulder", 135, 100, 500, 1, &pwm);
