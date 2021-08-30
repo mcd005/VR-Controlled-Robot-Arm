@@ -25,7 +25,7 @@ import sys
 # Units of length are in mm, angles are given in degrees
 
 class InverseKinematics():
-    def __init__(self, upper_arm_length=250, forearm_length=180, shoulder_rest_angle=78, elbow_rest_angle=90):
+    def __init__(self, upper_arm_length=105, forearm_length=270, shoulder_rest_angle=90, elbow_rest_angle=0):
         self.upper_arm_length = upper_arm_length
         self.forearm_length = forearm_length
         self.shoulder_rest_angle = math.radians(shoulder_rest_angle)
