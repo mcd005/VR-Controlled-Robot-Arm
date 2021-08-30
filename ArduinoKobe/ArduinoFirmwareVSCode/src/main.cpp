@@ -2,6 +2,7 @@
 #include <Arduino.h>
 #include <Wire.h>
 #include "Joint.hpp"
+#include "JointInfoStructs.hpp"
 
 #define SerialMonitor Serial
 #define Bluetooth Serial1

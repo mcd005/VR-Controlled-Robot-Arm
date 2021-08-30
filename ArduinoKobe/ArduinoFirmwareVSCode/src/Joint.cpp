@@ -1,16 +1,18 @@
-#include "Joint.hpp"
 #include <Adafruit_PWMServoDriver.h>
 #include <Arduino.h>
+#include "Joint.hpp"
+#include "JointInfoStructs.hpp"
 
 #define PULSE_ON 15
 #define INCREMENT_DELAY_USECS 0
 
-Joint::Joint(String name, JointAngleInfo angleInfo, JointPulseWidthInfo pulseWidthInfo, uint8_t channel, Adafruit_PWMServoDriver *pwmObject) :
+Joint::Joint(String name, JointAngleInfo givenAngleInfo, JointPulseWidthInfo givenPulseWidthInfo, uint8_t channel, Adafruit_PWMServoDriver *pwmObject) :
     jointName(name),
-    currentPulseWidth(calculatePulseWidth(angleInfo.startAngle)),
-    targetPulseWidth(calculatePulseWidth(angleInfo.startAngle)),
-    minPulseWidth(pulseWidthInfo.minPulseWidth),
-    maxPulseWidth(pulseWidthInfo.maxPulseWidth),
+    angleTransformer(givenAngleInfo),
+    currentPulseWidth(calculatePulseWidth(givenAngleInfo.startAngle)),
+    targetPulseWidth(calculatePulseWidth(givenAngleInfo.startAngle)),
+    minPulseWidth(givenPulseWidthInfo.minPulseWidth),
+    maxPulseWidth(givenPulseWidthInfo.maxPulseWidth),
     jointChannel(channel),
     pwm(pwmObject)
 {
@@ -35,5 +37,5 @@ void Joint::incrementPosition()
 
 int Joint::calculatePulseWidth(uint16_t angle)
 {
-    return map(angle, 0, 180, minPulseWidth, maxPulseWidth);
+    return map(angleTransformer.transfromAngle(angle), 0, 180, minPulseWidth, maxPulseWidth);
 }
