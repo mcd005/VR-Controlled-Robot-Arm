@@ -15,8 +15,10 @@ private:
     const uint16_t maxPulseWidth;
     const uint16_t jointChannel;
     Adafruit_PWMServoDriver* pwm;
+    unsigned long previousTimeJointWasIncremented = 0;
 
     int calculatePulseWidth(uint16_t angle);
+    bool isTimeToMove();
 public:
     Joint(String name, JointAngleInfo angleInfo, JointPulseWidthInfo pulseWidthInfo, uint8_t channel, Adafruit_PWMServoDriver* pwmObject); 
     String setTargetAngle(int givenAngle); 
