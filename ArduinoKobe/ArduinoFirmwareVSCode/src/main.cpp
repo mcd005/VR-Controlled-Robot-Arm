@@ -17,17 +17,17 @@ JointPulseWidthInfo smallServo { 150, 450 };
 // Initialise angle infor for each joint as 
 // {
 //     Start angle,
-//     Min legal angle,
+//     Min legal angle, given in terms of the servos ROM, as opposed to the frame of refrence of the joint
 //     Max legal angle,
-//     Offset angle (to account for misaligned servo horn etc)
+//     Offset angle (to account for frame of referance + misalignments during assembly e.g. servo horn etc)
 //     Invert the given angle. In case a servo is on backwards for example
 // }
 
 JointAngleInfo waistAngles { 90, 0, 180, 10, true };
-JointAngleInfo shoulderAngles { 45, 0, 180, 0, true };
-JointAngleInfo elbowAngles { 90, 0, 120, 10, true };
-JointAngleInfo pitchAngles { 90, 0, 180, 10, true };
-JointAngleInfo rollAngles { 90, 0, 180, 10, true };
+JointAngleInfo shoulderAngles { 90, 0, 180, 45 + 10, false };
+JointAngleInfo elbowAngles { 90, 50, 180, 90 + 10, false };
+JointAngleInfo pitchAngles { 90, 0, 180, 10, false };
+JointAngleInfo rollAngles { 90, 0, 180, 0, true };
 JointAngleInfo clawAngles { 70, 20, 100, 0, false };
 
 // Instantiate all arm joints
