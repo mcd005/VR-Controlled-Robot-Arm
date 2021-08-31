@@ -10,6 +10,7 @@ using System.Text;
  * then make it send a block of data when there is a change
  * add buffers for example a 5 degree change in controller position is not enough to warrant
  * sending data <-- is that really true though what if it needs to be precise
+ * DISABLE SCRIPT ON UNITY SO THAT IT IS NOT RAN
  */
 public class CommsManager : MonoBehaviour
 {
@@ -33,7 +34,7 @@ public class CommsManager : MonoBehaviour
     // adapted from: https://answers.unity.com/questions/1491938/sending-an-https-post-request-with-json-body.html
     IEnumerator SendData(string jsonData)
     {
-        var request = new UnityWebRequest("http://192.168.0.118:5000/", "POST");
+        var request = new UnityWebRequest("http://192.168.0.59:5000/", "POST");
         byte[] bodyRaw = Encoding.UTF8.GetBytes(jsonData);
         request.uploadHandler = (UploadHandler)new UploadHandlerRaw(bodyRaw);
         request.downloadHandler = (DownloadHandler)new DownloadHandlerBuffer();

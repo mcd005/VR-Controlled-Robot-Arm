@@ -154,14 +154,6 @@ public class HeadsetControlsManager : MonoBehaviour
     {
         if (AButton && BButton)
         {
-            chassisDirection = ChassisDirection.NONE;
-        }
-    }
-
-    public void translateSmallArmData(bool AButton, bool BButton)
-    {
-        if (AButton && BButton)
-        {
             smallArmVerticalDirection = SmallArmControl.DO_NOTHING;
         }
         else if (AButton)
