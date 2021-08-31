@@ -10,6 +10,7 @@ using System.Text;
  * then make it send a block of data when there is a change
  * add buffers for example a 5 degree change in controller position is not enough to warrant
  * sending data <-- is that really true though what if it needs to be precise
+ * DISABLE SCRIPT ON UNITY SO THAT IT IS NOT RAN
  */
 public class CommsManager : MonoBehaviour
 {
