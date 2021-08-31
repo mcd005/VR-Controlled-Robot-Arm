@@ -37,6 +37,9 @@ int posRecieved = 0;
 double pulselength;
 int wristAngle;
 
+String inputString = "";
+bool stringComplete = false;
+
 void setup() {
   // Initialize serial port
   Serial.begin(9600); // Main bus to PC
@@ -65,39 +68,57 @@ void setup() {
 
 void loop() {
 
-    //  char json[] = "{\"bigArmClaw\":\"90\",\"bigArmWristFlexor\":90}";
-
   // Deserialize the JSON document
-  if (Serial2.available())
-  {
-  DeserializationError error = deserializeJson(doc, Serial2);
-
-  if (error) {
-    Serial.print(F("deserializeJson() failed: "));
-    Serial.println(error.f_str());
-    return;
-  }
-  
-  }
-
-  
-  int Shoulder = doc["bigArmShoulder"].as<int>();
-  int Claw = doc["bigArmClaw"].as<int>();
-  int Elbow = doc["bigArmElbow"].as<int>();
-  int WristFlexor = doc["bigArmWristFlexor"].as<int>();
-  int WristRotator = doc["bigArmWristRotator"].as<int>();
-  int chassisDirection = doc["chassisDirection"].as<int>();
-  int smallArmVerticalDirection = doc["smallArmVerticalDirection"].as<int>();
-
- //Serial.println(WristFlexor);
- 
-  int startAngle = wristAngle;
-   int finalAngle = map(WristFlexor, 0, 180, W_SERVOMIN, W_SERVOMAX);
-   for (uint16_t angle = startAngle; angle < finalAngle; angle++) // This needs to be for bigger and smaller angles
-      {
-        pwm.setPWM(3,0, angle);
-        delay(30);
-        wristAngle = finalAngle;
+  if (Serial2.available() > 0)
+  {   
+      DeserializationError error = deserializeJson(doc, Serial2);
+      if (error) {
+        Serial.print(F("deserializeJson() failed: "));
+        Serial.println(error.f_str());
+        return;
       }
 
+      int Shoulder = doc["bigArmShoulder"].as<int>();
+      int Claw = doc["bigArmClaw"].as<int>();
+      int Elbow = doc["bigArmElbow"].as<int>();
+      int WristFlexor = doc["bigArmWristFlexor"].as<int>();
+      int WristRotator = doc["bigArmWristRotator"].as<int>();
+      int chassisDirection = doc["chassisDirection"].as<int>();
+      int smallArmVerticalDirection = doc["smallArmVerticalDirection"].as<int>();
+
+      Serial.println("big arm Wrist Rotator: " + String(WristRotator));
+      Serial.println("big arm wrist flexor: " + String(WristFlexor));
+      Serial.println("big arm shoulder: " + String(Shoulder));
+      Serial.println("big arm Elbow: " + String(Elbow));
+      Serial.println("chassisDirection: " + String(chassisDirection));
+      Serial.println("smallArmVerticalDirection: " + String(smallArmVerticalDirection));
+  }
+  Serial2.flush();
+
+
+
+//
+// Serial2.println(WristFlexor);
+// 
+//  int startAngle = wristAngle;
+//   int finalAngle = map(WristFlexor, 0, 180, W_SERVOMIN, W_SERVOMAX);
+//   for (uint16_t angle = startAngle; angle < finalAngle; angle++) // This needs to be for bigger and smaller angles
+//      {
+//        pwm.setPWM(3,0, angle);
+//        delay(30);
+//        wristAngle = finalAngle;
+//      }
+
 }
+
+//void serialEvent2() {
+//  while (Serial2.available()) {
+//
+//    char inChar = (char)Serial2.read();
+//    inputString += inChar;
+//    if (inChar == '\n') {
+//      stringComplete = true;
+//    }
+//  }
+//}
+  

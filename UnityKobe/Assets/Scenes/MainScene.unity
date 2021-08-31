@@ -133,6 +133,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1174247}
   - component: {fileID: 1174248}
+  - component: {fileID: 1174249}
   m_Layer: 0
   m_Name: CommsManager
   m_TagString: Untagged
@@ -161,12 +162,25 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1174246}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b4eccb6d3b3acf2428c4ea29cd4a49d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   jsonData: 
+  headsetControlsManager: {fileID: 22645987}
+--- !u!114 &1174249
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1174246}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 61d347ee1decb5a42b031b450eb490d7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
   headsetControlsManager: {fileID: 22645987}
 --- !u!1 &22645985
 GameObject:

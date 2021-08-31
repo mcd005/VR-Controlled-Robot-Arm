@@ -1,6 +1,20 @@
-#include "ChasisControl.h"
-#include "HBridgeDriver.h"
 #include <ArduinoJson.h>
+#include <Adafruit_PWMServoDriver.h>
+#include <Wire.h>
+
+#include "ChassisControl.h"
+#include "HBridgeDriver.h"
+#include "SmallArm.h"
+#include "BigArm.h"
+#include "Joint.h"
+#include "RobotControl.h"
+
+#define DEBUG
+#define Debug Serial
+#define Bluetooth Serial1
+#define PiSerial Serial2
+
+#define SERVO_FREQ 50
 
 
 #define H1_ENA 35
@@ -10,12 +24,16 @@
 #define H1_IN4 38
 #define H1_ENB 37
 
+
 #define H2_ENA 25
 #define H2_IN1 22
 #define H2_IN2 24
 #define H2_IN3 26
 #define H2_IN4 28
 #define H2_ENB 27
+
+#define SMALL_ARM_MAX_PULSE_WIDTH 200 // angle of 20 degree 
+#define SMALL_ARM_MIN_PULSE_WIDTH 150 // angle of 0
 
 
 HBridgeDriver frontHbridge(H1_ENA,
@@ -33,67 +51,77 @@ HBridgeDriver backHBridge(H2_ENA,
                           H2_ENB);
 
 
-ChasisControl chasisControl(&frontHbridge,&backHBridge);
+Adafruit_PWMServoDriver pwmDriver1 = Adafruit_PWMServoDriver(0x40); // has default adress
+Adafruit_PWMServoDriver pwmDriver2 = Adafruit_PWMServoDriver(0x41); // the address of the pwmdriver needs to be changed
+
+// find out DEFAULT positions
+Joint waist("waist", 0, 150, 450, 0, &pwmDriver2);  //big 
+Joint shoulder("shoulder", 0, 150, 450,  1, &pwmDriver1); // big
+Joint elbow("elbow", 0, 150, 450, 2, &pwmDriver1); // big
+Joint pitch("pitch", 0, 150, 450, 3, &pwmDriver1); // small
+Joint roll("roll", 0, 150, 450, 4, &pwmDriver2); // small
+Joint claw("claw", 0, 150, 450, 5, &pwmDriver1); // small
+
+Joint baseServo("baseServo", 0, 150, SMALL_ARM_MAX_PULSE_WIDTH, 6, &pwmDriver2); // big
+Joint bendServo("bendServo", 0, 150, SMALL_ARM_MAX_PULSE_WIDTH, 7, &pwmDriver2); // small
 
 
-DynamicJsonDocument doc(1024);
+BigArm bigArmControl(&waist,&shoulder,&elbow,&pitch,&roll,&claw); 
 
+SmallArm smallArmControl(&baseServo, &bendServo);
 
+ChassisControl chassisControl(&frontHbridge,&backHBridge);
+
+RobotControl robotControl(&bigArmControl, &smallArmControl, &chassisControl);
+
+DynamicJsonDocument controlDataJson(1024);
+
+// when reset is called is just setup called or is the entire - it powers on and off
 void setup() 
 {
-  Serial.begin(9600);
-  Serial2.begin(9600);
-  chasisControl.begin();
+  Debug.begin(9600);
+  PiSerial.begin(9600);
+
+  Bluetooth.begin(9600);
+  Bluetooth.setTimeout(1000);
+
+  pwmDriver1.begin();
+  pwmDriver1.setPWMFreq(SERVO_FREQ);
+
+  pwmDriver2.begin();
+  pwmDriver2.setPWMFreq(SERVO_FREQ);
   
+//  bigArmControl.begin();
+  chassisControl.begin();
 }
 
 void loop() 
 {
-  if (Serial2.available() > 0)
-  {   
-      DeserializationError error = deserializeJson(doc, Serial2);
-      if (error) {
-        Serial.print(F("deserializeJson() failed: "));
-        Serial.println(error.f_str());
-        return;
-      }
-
-      int WristFlexor = doc["bigArmWristFlexor"].as<int>();
-      int bigArmClaw = doc["bigArmClaw"].as<int>();
-      int bigArmWristRotator = doc["bigArmWristRotator"].as<int>();
-      int bigArmElbow = doc["bigArmElbow"].as<int>();
-      int bigArmShoulder = doc["bigArmShoulder"].as<int>();
-      int chassisDirection = doc["chassisDirection"].as<int>();
-      int smallArmDirection = doc["smallArmVerticalDirection"].as<int>();
-
-      Serial.println("big arm data: " + String(WristFlexor));
-      Serial.println("big arm wrist flexor: " + String(bigArmClaw));
-      Serial.println("big arm wrist rotator: " + String(bigArmWristRotator));
-      Serial.println("big arm elbow: " + String(bigArmElbow));
-      Serial.println("big arm elbow: " + String(bigArmShoulder));
-      Serial.println("chassis direction: " + String(chassisDirection));
-      Serial.println("small arm direction: " + String(smallArmDirection));
-
-
-      if(chassisDirection == 0) {
-          chasisControl.Forward();
-      }
-      else if(chassisDirection == 1) {
-          chasisControl.Backward();
-      }
-      else if(chassisDirection == 2) {
-          chasisControl.Left();
-      }
-      else if(chassisDirection == 3) {
-          chasisControl.Right();
-      }
-      else if(chassisDirection ==6) {
-          chasisControl.Stop();
-      }
-      else {
-        Serial.println("Nothing");
-      }
+  if (isDeserializeJsonStringSuccessful())
+  {
+    Debug.println(controlDataJson["chassisDirection"].as<int>());
+    robotControl.handleControl(controlDataJson);
   }
-  Serial2.flush();
-  //chasisControl.Forward();
+
+  Bluetooth.flush();
+}
+
+bool isDeserializeJsonStringSuccessful()
+{
+  DeserializationError deserializationError;
+
+    if (Bluetooth.available() > 0)
+    {   
+        deserializationError = deserializeJson(controlDataJson, Bluetooth);
+        if (deserializationError) 
+        {
+          Debug.print(F("deserializeJson() failed: "));
+          Debug.println(deserializationError.f_str());
+          // if the data is not deserialise what happens ??? Old data?
+          // see what deserializeJson does ?? nothing?
+          return false;
+        }
+        return true;
+    }
+  return false;
 }
