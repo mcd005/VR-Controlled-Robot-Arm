@@ -15,6 +15,8 @@ public:
     void moveBackward();
     void turnLeft();
     void turnRight();
+    void RotateRight();
+    void RotateLeft();
     void stop();
 
     ~HBridgeDriver();
@@ -27,5 +29,3 @@ private:
     int _IN4;
     int _ENB;
 };
-
-

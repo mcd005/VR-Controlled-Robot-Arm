@@ -46,14 +46,14 @@ void ChassisControl::Right()
 
 void ChassisControl::RotateLeft()
 {
-    // _FrontHbridge->turnLeft();
-    // _BackHBridge->turnRight();
+     _FrontHbridge->turnRight();
+      _BackHBridge->turnRight();
 }
 
 void ChassisControl::RotateRight()
 {
-    // _FrontHbridge->turnRight();
-    // _BackHBridge->turnLeft();
+     _FrontHbridge->turnLeft();
+     _BackHBridge->turnLeft();
 }
 
 void ChassisControl::Stop()
