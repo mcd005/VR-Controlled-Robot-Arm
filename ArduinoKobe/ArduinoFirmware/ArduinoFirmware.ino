@@ -83,7 +83,7 @@ void setup()
   PiSerial.begin(9600);
 
   Bluetooth.begin(9600);
-  Bluetooth.setTimeout(10);
+  Bluetooth.setTimeout(1000);
 
   pwmDriver1.begin();
   pwmDriver1.setPWMFreq(SERVO_FREQ);
@@ -99,18 +99,17 @@ void loop()
 {
   if (isDeserializeJsonStringSuccessful())
   {
+    Debug.println(controlDataJson["chassisDirection"].as<int>());
     robotControl.handleControl(controlDataJson);
   }
 
   Bluetooth.flush();
 }
 
-DeserializationError isDeserializeJsonStringSuccessful() 
+bool isDeserializeJsonStringSuccessful()
 {
   DeserializationError deserializationError;
 
-  while (Bluetooth.available()) 
-  {
     if (Bluetooth.available() > 0)
     {   
         deserializationError = deserializeJson(controlDataJson, Bluetooth);
@@ -120,9 +119,9 @@ DeserializationError isDeserializeJsonStringSuccessful()
           Debug.println(deserializationError.f_str());
           // if the data is not deserialise what happens ??? Old data?
           // see what deserializeJson does ?? nothing?
-          return deserializationError;
+          return false;
         }
+        return true;
     }
-  }
-  return deserializationError;
+  return false;
 }
