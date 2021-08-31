@@ -1,19 +1,18 @@
-
-#include <Arduino.h>
 #include <Adafruit_PWMServoDriver.h>
-
-#include "Joint.h"
-
+#include <Arduino.h>
+#include "Joint.hpp"
+#include "JointInfoStructs.hpp"
 
 #define PULSE_ON 15
-#define INCREMENT_DELAY_USECS 0
+#define INCREMENT_DELAY_USECS 10000
 
-Joint::Joint(String name, uint16_t startAngle, uint16_t pulseMin, uint16_t pulseMax, uint16_t channel, Adafruit_PWMServoDriver *pwmObject) :
+Joint::Joint(String name, JointAngleInfo givenAngleInfo, JointPulseWidthInfo givenPulseWidthInfo, uint8_t channel, Adafruit_PWMServoDriver *pwmObject) :
     jointName(name),
-    currentPulseWidth(calculatePulseWidth(startAngle)),
-    minPulseWidth(pulseMin),
-    maxPulseWidth(pulseMax),
-    targetPulseWidth(calculatePulseWidth(startAngle)),
+    angleTransformer(givenAngleInfo),
+    currentPulseWidth(calculatePulseWidth(givenAngleInfo.startAngle)),
+    targetPulseWidth(calculatePulseWidth(givenAngleInfo.startAngle)),
+    minPulseWidth(givenPulseWidthInfo.minPulseWidth),
+    maxPulseWidth(givenPulseWidthInfo.maxPulseWidth),
     jointChannel(channel),
     pwm(pwmObject)
 {
@@ -27,19 +26,28 @@ String Joint::setTargetAngle(int givenAngle)
 
 void Joint::incrementPosition()
 {
-    if (currentPulseWidth != targetPulseWidth)
+    if (isTimeToMove() && (currentPulseWidth != targetPulseWidth))
     {
         if (currentPulseWidth < targetPulseWidth) ++currentPulseWidth;
         if (currentPulseWidth > targetPulseWidth) --currentPulseWidth;
         pwm->setPWM(jointChannel, PULSE_ON, currentPulseWidth);
-        delay(INCREMENT_DELAY_USECS);
     }
 }
 
-
 int Joint::calculatePulseWidth(uint16_t angle)
 {
-    return map(angle, 0, 180, minPulseWidth, maxPulseWidth);
+    return map(angleTransformer.transfromAngle(angle), 0, 180, minPulseWidth, maxPulseWidth);
+}
+
+bool Joint::isTimeToMove()
+{
+    unsigned long currentTime = micros(); // Be careful, this will overflow after 70 mins
+    if (currentTime - previousTimeJointWasIncremented > INCREMENT_DELAY_USECS)
+    {
+        previousTimeJointWasIncremented = currentTime;
+        return true;
+    }
+    return false;
 }
 
 /*

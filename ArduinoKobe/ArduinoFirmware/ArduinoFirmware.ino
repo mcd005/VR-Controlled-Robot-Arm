@@ -6,8 +6,9 @@
 #include "HBridgeDriver.h"
 #include "SmallArm.h"
 #include "BigArm.h"
-#include "Joint.h"
+#include "Joint.hpp"
 #include "RobotControl.h"
+#include "JointInfoStructs.hpp"
 
 #define DEBUG
 #define Debug Serial
@@ -32,10 +33,6 @@
 #define H2_IN4 28
 #define H2_ENB 27
 
-#define SMALL_ARM_MAX_PULSE_WIDTH 200 // angle of 20 degree 
-#define SMALL_ARM_MIN_PULSE_WIDTH 150 // angle of 0
-
-
 HBridgeDriver frontHbridge(H1_ENA,
                           H1_IN1,
                           H1_IN2,
@@ -54,16 +51,40 @@ HBridgeDriver backHBridge(H2_ENA,
 Adafruit_PWMServoDriver pwmDriver1 = Adafruit_PWMServoDriver(0x40); // has default adress
 Adafruit_PWMServoDriver pwmDriver2 = Adafruit_PWMServoDriver(0x41); // the address of the pwmdriver needs to be changed
 
-// find out DEFAULT positions
-Joint waist("waist", 0, 150, 450, 0, &pwmDriver2);  //big 
-Joint shoulder("shoulder", 0, 150, 450,  1, &pwmDriver1); // big
-Joint elbow("elbow", 0, 150, 450, 2, &pwmDriver1); // big
-Joint pitch("pitch", 0, 150, 450, 3, &pwmDriver1); // small
-Joint roll("roll", 0, 150, 450, 4, &pwmDriver2); // small
-Joint claw("claw", 0, 150, 450, 5, &pwmDriver1); // small
+// TODO make sure Rishan is happy with these pulse widths
 
-Joint baseServo("baseServo", 0, 150, SMALL_ARM_MAX_PULSE_WIDTH, 6, &pwmDriver2); // big
-Joint bendServo("bendServo", 0, 150, SMALL_ARM_MAX_PULSE_WIDTH, 7, &pwmDriver2); // small
+// Initialse servo pulse info as: {minPulseWidth, maxPulseWidth}
+JointPulseWidthInfo bigServo { 100, 500 };
+JointPulseWidthInfo smallServo { 150, 450 };
+
+// TODO find out correct starting angles, ROM and offsets
+// Initialise angle info for each joint as
+// {
+//     Start angle,
+//     Min legal angle, given in terms of the servos ROM, as opposed to the frame of refrence of the joint
+//     Max legal angle,
+//     Offset angle (to account for frame of referance + misalignments during assembly e.g. servo horn etc)
+//     Invert the given angle. In case a servo is on backwards for example
+// }
+
+JointAngleInfo waistAngles {0, 0, 180, 10, true };
+JointAngleInfo shoulderAngles { 0, 0, 180, 45 + 10, false };
+JointAngleInfo elbowAngles { 0, 50, 180, 90 + 10, false };
+JointAngleInfo pitchAngles { 0, 0, 180, 10, false };
+JointAngleInfo rollAngles { 0, 0, 180, 0, true };
+JointAngleInfo clawAngles { 0, 20, 100, 0, false };
+JointAngleInfo baseAngles { 0, 0, 20, 0, false };
+JointAngleInfo bendAngles { 0, 0, 20, 0, false };
+
+Joint waist("waist", waistAngles, bigServo, 0, &pwmDriver2);  //big
+Joint shoulder("shoulder", shoulderAngles, bigServo,  1, &pwmDriver1); // big
+Joint elbow("elbow", elbowAngles, bigServo, 2, &pwmDriver1); // big
+Joint pitch("pitch", pitchAngles, smallServo, 3, &pwmDriver1); // small
+Joint roll("roll", rollAngles, smallServo, 4, &pwmDriver2); // small
+Joint claw("claw", clawAngles, smallServo, 5, &pwmDriver1); // small
+
+Joint baseServo("baseServo", baseAngles, bigServo, 6, &pwmDriver2); // big
+Joint bendServo("bendServo", bendAngles, smallServo, 7, &pwmDriver2); // small
 
 
 BigArm bigArmControl(&waist,&shoulder,&elbow,&pitch,&roll,&claw); 
