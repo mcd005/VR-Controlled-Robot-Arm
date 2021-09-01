@@ -118,14 +118,24 @@ void setup()
 
 void loop() 
 {
-  if (isDeserializeJsonStringSuccessful())
+  if (Bluetooth.available())
   {
-    Debug.println(controlDataJson["smallArmVerticalDirection"].as<int>());
-    robotControl.handleControl(controlDataJson);
-  }
-  bendServo.incrementPosition();
+    // Expecting a comma seperated list of coords: W10,S50,E120 etc
+    String inputSerial = Bluetooth.readStringUntil(',');
+    char jointID = inputSerial[0];
+    int givenValue = inputSerial.substring(1).toInt();
 
-  Bluetooth.flush();
+    Serial.print(jointID);
+    Serial.println(givenValue);
+
+    // if (jointID == 'D')
+    // {
+    //   if (givenValue == 0) Serial.println(bendServo.setTargetAngle(60));
+    //   if (givenValue == 1) Serial.println(bendServo.setTargetAngle(0));
+    
+    // else
+    //   Serial.println("Invalid joint");
+  }
 }
 
 bool isDeserializeJsonStringSuccessful()
