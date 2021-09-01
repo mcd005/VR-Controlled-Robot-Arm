@@ -82,7 +82,7 @@ public class HeadsetControlsManager : MonoBehaviour
       translateChassisData(chassisControlData);
       translateBigArmData(RControllerPos);
       translateSmallArmData(RAButtonPress,RBButtonPress);
-      json = toJSON(this);
+      // json = toJSON(this);
     }
 
     public void getControllerData()
@@ -170,8 +170,14 @@ public class HeadsetControlsManager : MonoBehaviour
         }
     }
 
+    public string getData() {
+      int smallArmValue = (int) smallArmVerticalDirection;
+      int chassisDirectionValue = (int) chassisDirection;
+      return $"D{smallArmValue},K{chassisDirectionValue},";
+    }
 
 
+    // these are useless now ... we do not use JSON anymore!
     public string getJSON()
     {
         return json;
