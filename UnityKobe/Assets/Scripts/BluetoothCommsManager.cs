@@ -32,15 +32,15 @@ public class BluetoothCommsManager : MonoBehaviour
 
       headsetControlsManager = FindObjectOfType<HeadsetControlsManager>();
 
-      InvokeRepeating("SendData", 1.0f, 1.0f);
+      InvokeRepeating("SendData", 1.0f, 0.5f);
     }
 
     void SendData()
     {
-      string json = headsetControlsManager.getJSON();
+      // string json = headsetControlsManager.getJSON();
+      string json = headsetControlsManager.getData();
       if (!string.IsNullOrEmpty(json)) {
-        _serialPort.WriteLine(
-                json);
+        _serialPort.Write(json);
         Debug.Log(json);
               // System.Threading.Thread.Sleep(100);
         }
