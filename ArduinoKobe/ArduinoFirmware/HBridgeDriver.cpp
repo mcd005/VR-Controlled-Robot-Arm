@@ -81,6 +81,7 @@ void HBridgeDriver::turnRight()
     digitalWrite(_IN4, LOW);
 }
 
+
 void HBridgeDriver::stop()
 {
     digitalWrite(_IN1, LOW);
