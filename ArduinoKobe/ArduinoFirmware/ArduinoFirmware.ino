@@ -128,14 +128,14 @@ void loop()
     Serial.print(jointID);
     Serial.println(givenValue);
 
-    // if (jointID == 'D')
-    // {
-    //   if (givenValue == 0) Serial.println(bendServo.setTargetAngle(60));
-    //   if (givenValue == 1) Serial.println(bendServo.setTargetAngle(0));
-    
-    // else
-    //   Serial.println("Invalid joint");
+    if (jointID == 'D')
+    {
+      if (givenValue == 0) Serial.println(bendServo.setTargetAngle(60));
+      if (givenValue == 1) Serial.println(bendServo.setTargetAngle(0));
+    }
+    else Serial.println("Invalid joint");
   }
+  bendServo.incrementPosition();
 }
 
 bool isDeserializeJsonStringSuccessful()
