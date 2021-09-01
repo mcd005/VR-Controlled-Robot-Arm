@@ -4,6 +4,9 @@
 #include "JointInfoStructs.hpp"
 #include "AngleTransformer.hpp"
 
+#ifndef JOINT
+#define JOINT
+
 class Joint
 {
 private:
@@ -23,4 +26,8 @@ public:
     Joint(String name, JointAngleInfo angleInfo, JointPulseWidthInfo pulseWidthInfo, uint8_t channel, Adafruit_PWMServoDriver* pwmObject); 
     String setTargetAngle(int givenAngle); 
     void incrementPosition(); 
+    void increaseAngle();
+    void decreaseAngle();
 };
+
+#endif

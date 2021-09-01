@@ -1,7 +1,7 @@
 #pragma once
 
 #include "HBridgeDriver.h"
-#include "Joint.h"
+#include "Joint.hpp"
 
 class SmallArm
 {
