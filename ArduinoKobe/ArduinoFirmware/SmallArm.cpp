@@ -13,10 +13,10 @@ SmallArm::~SmallArm()
 
 void SmallArm::UP()
 {   
-    _bendServo->increaseAngle();
+    _bendServo->setTargetAngle(20);
 }
 
 void SmallArm::DOWN()
 {
-    _bendServo->decreaseAngle();
+    _bendServo->setTargetAngle(0);
 }

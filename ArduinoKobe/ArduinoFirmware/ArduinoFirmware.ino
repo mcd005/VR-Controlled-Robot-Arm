@@ -74,7 +74,7 @@ JointAngleInfo pitchAngles { 0, 0, 180, 10, false };
 JointAngleInfo rollAngles { 0, 0, 180, 0, true };
 JointAngleInfo clawAngles { 0, 20, 100, 0, false };
 JointAngleInfo baseAngles { 0, 0, 20, 0, false };
-JointAngleInfo bendAngles { 0, 0, 20, 0, false };
+JointAngleInfo bendAngles { 90, 0, 180, 0, false };
 
 Joint waist("waist", waistAngles, bigServo, 0, &pwmDriver2);  //big
 Joint shoulder("shoulder", shoulderAngles, bigServo,  1, &pwmDriver1); // big
@@ -83,8 +83,8 @@ Joint pitch("pitch", pitchAngles, smallServo, 3, &pwmDriver1); // small
 Joint roll("roll", rollAngles, smallServo, 4, &pwmDriver2); // small
 Joint claw("claw", clawAngles, smallServo, 5, &pwmDriver1); // small
 
-Joint baseServo("baseServo", baseAngles, bigServo, 6, &pwmDriver2); // big
-Joint bendServo("bendServo", bendAngles, smallServo, 7, &pwmDriver2); // small
+Joint baseServo("baseServo", baseAngles, bigServo, 1, &pwmDriver2); // big
+Joint bendServo("bendServo", bendAngles, bigServo, 0, &pwmDriver2);
 
 
 BigArm bigArmControl(&waist,&shoulder,&elbow,&pitch,&roll,&claw); 
@@ -118,13 +118,34 @@ void setup()
 
 void loop() 
 {
-  if (isDeserializeJsonStringSuccessful())
+  if (Bluetooth.available())
   {
-    Debug.println(controlDataJson["chassisDirection"].as<int>());
-    robotControl.handleControl(controlDataJson);
-  }
+    // Expecting a comma seperated list of coords: W10,S50,E120 etc
+    String inputSerial = Bluetooth.readStringUntil(',');
+    char actuatorID = inputSerial[0];
+    int givenValue = inputSerial.substring(1).toInt();
 
-  Bluetooth.flush();
+    // Serial.print(actuatorID);
+    // Serial.println(givenValue);
+
+    if (actuatorID == 'D')
+    {
+      if (givenValue == 0) Serial.println(bendServo.setTargetAngle(60));
+      if (givenValue == 1) Serial.println(bendServo.setTargetAngle(0));
+    }
+    if (actuatorID)
+    {
+      if (givenValue == 0) chassisControl.Forward();
+      else if (givenValue == 1) chassisControl.Backward();
+      else if (givenValue == 2) chassisControl.Left();
+      else if (givenValue == 3) chassisControl.Right();
+      else if (givenValue == 4) chassisControl.RotateRight();
+      else if (givenValue == 5) chassisControl.RotateLeft();
+      else chassisControl.Stop();
+    }
+    else Serial.println("Invalid joint");
+  }
+  bendServo.incrementPosition();
 }
 
 bool isDeserializeJsonStringSuccessful()
