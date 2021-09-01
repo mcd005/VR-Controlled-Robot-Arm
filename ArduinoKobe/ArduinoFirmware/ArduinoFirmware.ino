@@ -122,16 +122,26 @@ void loop()
   {
     // Expecting a comma seperated list of coords: W10,S50,E120 etc
     String inputSerial = Bluetooth.readStringUntil(',');
-    char jointID = inputSerial[0];
+    char actuatorID = inputSerial[0];
     int givenValue = inputSerial.substring(1).toInt();
 
-    Serial.print(jointID);
-    Serial.println(givenValue);
+    // Serial.print(actuatorID);
+    // Serial.println(givenValue);
 
-    if (jointID == 'D')
+    if (actuatorID == 'D')
     {
       if (givenValue == 0) Serial.println(bendServo.setTargetAngle(60));
       if (givenValue == 1) Serial.println(bendServo.setTargetAngle(0));
+    }
+    if (actuatorID)
+    {
+      if (givenValue == 0) chassisControl.Forward();
+      else if (givenValue == 1) chassisControl.Backward();
+      else if (givenValue == 2) chassisControl.Left();
+      else if (givenValue == 3) chassisControl.Right();
+      else if (givenValue == 4) chassisControl.RotateRight();
+      else if (givenValue == 5) chassisControl.RotateLeft();
+      else chassisControl.Stop();
     }
     else Serial.println("Invalid joint");
   }
