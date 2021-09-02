@@ -432,7 +432,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: Where data will be displayed
+  m_Text: 
 --- !u!222 &505358347
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1633,7 +1633,7 @@ Transform:
   m_GameObject: {fileID: 1459446916}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 100, y: 100, z: 100}
+  m_LocalScale: {x: 100, y: 100, z: -100}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 3
