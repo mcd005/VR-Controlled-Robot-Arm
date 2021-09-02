@@ -44,8 +44,8 @@ void HBridgeDriver::moveForward()
     digitalWrite(_IN3, HIGH);
     digitalWrite(_IN4, LOW);
 
-    digitalWrite(_ENA, HIGH);
-    digitalWrite(_ENB, HIGH);
+    analogWrite(_ENA, 112);
+    analogWrite(_ENB, 112);
 }
 
 void HBridgeDriver::moveBackward()
@@ -58,8 +58,8 @@ void HBridgeDriver::moveBackward()
     digitalWrite(_IN3, LOW);
     digitalWrite(_IN4, HIGH);
 
-    digitalWrite(_ENA, HIGH);
-    digitalWrite(_ENB, HIGH);
+    analogWrite(_ENA, 112);
+    analogWrite(_ENB, 112);
 }
 
 void HBridgeDriver::turnLeft()
@@ -70,6 +70,9 @@ void HBridgeDriver::turnLeft()
     // front left motor backward
     digitalWrite(_IN3, LOW);
     digitalWrite(_IN4, HIGH);
+
+    analogWrite(_ENA, 112);
+    analogWrite(_ENB, 112);
 }
 
 void HBridgeDriver::turnRight()
@@ -79,6 +82,9 @@ void HBridgeDriver::turnRight()
     // front left motor backward
     digitalWrite(_IN3, HIGH);
     digitalWrite(_IN4, LOW);
+
+    analogWrite(_ENA, 112);
+    analogWrite(_ENB, 112);
 }
 
 

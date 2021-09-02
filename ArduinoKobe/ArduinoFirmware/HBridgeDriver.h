@@ -15,8 +15,6 @@ public:
     void moveBackward();
     void turnLeft();
     void turnRight();
-    void RotateRight();
-    void RotateLeft();
     void stop();
 
     ~HBridgeDriver();
