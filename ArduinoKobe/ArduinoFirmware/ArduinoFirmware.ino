@@ -18,20 +18,20 @@
 #define SERVO_FREQ 50
 
 
-#define H1_ENA 35
+#define H1_ENA 5
 #define H1_IN1 32
 #define H1_IN2 34
 #define H1_IN3 36
 #define H1_IN4 38
-#define H1_ENB 37
+#define H1_ENB 4
 
 
-#define H2_ENA 25
+#define H2_ENA 3
 #define H2_IN1 22
 #define H2_IN2 24
 #define H2_IN3 26
 #define H2_IN4 28
-#define H2_ENB 27
+#define H2_ENB 2
 
 HBridgeDriver frontHbridge(H1_ENA,
                           H1_IN1,
