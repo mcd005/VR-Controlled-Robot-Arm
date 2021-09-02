@@ -123,11 +123,11 @@ public class HeadsetControlsManager : MonoBehaviour
         // put priority on forward, backward, left and right movement
         if (chassisControlData.LHandTrigger > 0 && !chassisControlData.thumbStickUsed())
         {
-            chassisDirection = ChassisDirection.ROTATE_LEFT;
+            chassisDirection = ChassisDirection.LEFT;
         }
         else if (chassisControlData.LIndexTrigger > 0 && !chassisControlData.thumbStickUsed())
         {
-            chassisDirection = ChassisDirection.ROTATE_RIGHT;
+            chassisDirection = ChassisDirection.RIGHT;
         }
         else if (chassisControlData.LThumbstickUp)
         {
@@ -139,11 +139,11 @@ public class HeadsetControlsManager : MonoBehaviour
         }
         else if (chassisControlData.LThumbstickLeft)
         {
-            chassisDirection = ChassisDirection.LEFT;
+            chassisDirection = ChassisDirection.ROTATE_LEFT;
         }
         else if (chassisControlData.LThumbstickRight)
         {
-            chassisDirection = ChassisDirection.RIGHT;
+            chassisDirection = ChassisDirection.ROTATE_RIGHT;
         } else
         {
             chassisDirection = ChassisDirection.NONE;
