@@ -67,8 +67,9 @@ void loop()
         else if (jointID == 'P') actuatorResponse = pitch.setTargetAngle(givenAngle);
         else if (jointID == 'R') actuatorResponse = roll.setTargetAngle(givenAngle);
         else if (jointID == 'C') actuatorResponse = claw.setTargetAngle(givenAngle);
-        else Serial.println("Invalid joint");
-        // Serial.println(actuatorResponse);
+        else if (jointID == 'K' || jointID == 'D') actuatorResponse = "Unassigned joint";
+        else actuatorResponse = "Invalid joint";
+        Serial.println(actuatorResponse);
     }
     waist.incrementPosition();
     shoulder.incrementPosition();
