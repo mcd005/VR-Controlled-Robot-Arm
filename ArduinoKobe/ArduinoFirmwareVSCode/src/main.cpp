@@ -23,7 +23,7 @@ JointPulseWidthInfo smallServo { 150, 450 };
 //     Invert the given angle. In case a servo is on backwards for example
 // }
 
-JointAngleInfo waistAngles { 90, 0, 180, 10, true };
+JointAngleInfo waistAngles { 90, 0, 180, 15, true };
 JointAngleInfo shoulderAngles { 90, 0, 180, 45 + 10, false };
 JointAngleInfo elbowAngles { 90, 50, 180, 90 + 10, false };
 JointAngleInfo pitchAngles { 90, 0, 180, 10, false };
