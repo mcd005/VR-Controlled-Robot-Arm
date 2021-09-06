@@ -72,9 +72,13 @@ JointAngleInfo shoulderAngles { 0, 0, 180, 45 + 10, false };
 JointAngleInfo elbowAngles { 0, 50, 180, 90 + 10, false };
 JointAngleInfo pitchAngles { 0, 0, 180, 10, false };
 JointAngleInfo rollAngles { 0, 0, 180, 0, true };
-JointAngleInfo clawAngles { 0, 20, 100, 0, false };
-JointAngleInfo baseAngles { 0, 0, 20, 0, false };
-JointAngleInfo bendAngles { 90, 0, 180, 0, false };
+JointAngleInfo clawAngles { 0, 0, 180, 0, true };
+
+
+JointAngleInfo baseAngles{90, 0, 90, 0, 0};
+JointAngleInfo bendAngles{90, 80, 180, 15, false};
+JointAngleInfo smallClawAngles{105, 105, 180, 0, false};
+
 
 Joint waist("waist", waistAngles, bigServo, 0, &pwmDriver2);  //big
 Joint shoulder("shoulder", shoulderAngles, bigServo,  1, &pwmDriver1); // big
@@ -83,8 +87,8 @@ Joint pitch("pitch", pitchAngles, smallServo, 3, &pwmDriver1); // small
 Joint roll("roll", rollAngles, smallServo, 4, &pwmDriver2); // small
 Joint claw("claw", clawAngles, smallServo, 5, &pwmDriver1); // small
 
-Joint baseServo("baseServo", baseAngles, bigServo, 1, &pwmDriver2); // big
-Joint bendServo("bendServo", bendAngles, bigServo, 0, &pwmDriver2);
+Joint baseServo("baseServo", baseAngles, smallServo, 0, &pwmDriver1); // big
+Joint bendServo("bendServo", bendAngles, bigServo, 1, &pwmDriver2);
 
 
 BigArm bigArmControl(&waist,&shoulder,&elbow,&pitch,&roll,&claw); 
@@ -130,10 +134,10 @@ void loop()
 
     if (actuatorID == 'D')
     {
-      if (givenValue == 0) Serial.println(bendServo.setTargetAngle(60));
-      if (givenValue == 1) Serial.println(bendServo.setTargetAngle(0));
+      if (givenValue == 0) Serial.println(baseServo.setTargetAngle(45));
+      if (givenValue == 1) Serial.println(baseServo.setTargetAngle(90));
     }
-    if (actuatorID)
+    else if (actuatorID == 'K')
     {
       if (givenValue == 0) chassisControl.Forward();
       else if (givenValue == 1) chassisControl.Backward();
@@ -143,9 +147,9 @@ void loop()
       else if (givenValue == 5) chassisControl.RotateLeft();
       else chassisControl.Stop();
     }
-    else Serial.println("Invalid joint");
+    // else Serial.println("Invalid joint");
   }
-  bendServo.incrementPosition();
+  baseServo.incrementPosition();
 }
 
 bool isDeserializeJsonStringSuccessful()
