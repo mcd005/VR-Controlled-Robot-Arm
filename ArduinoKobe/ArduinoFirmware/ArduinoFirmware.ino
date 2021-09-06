@@ -75,7 +75,7 @@ JointAngleInfo rollAngles { 0, 0, 180, 0, true };
 JointAngleInfo clawAngles { 0, 0, 180, 0, true };
 
 
-JointAngleInfo baseAngles{90, 0, 90, 0, 0};
+JointAngleInfo baseAngles{80, 20, 90, 0, false};
 JointAngleInfo bendAngles{90, 80, 180, 15, false};
 JointAngleInfo smallClawAngles{105, 105, 180, 0, false};
 
@@ -134,8 +134,8 @@ void loop()
 
     if (actuatorID == 'D')
     {
-      if (givenValue == 0) Serial.println(baseServo.setTargetAngle(45));
-      if (givenValue == 1) Serial.println(baseServo.setTargetAngle(90));
+      if (givenValue == 0) Serial.println(baseServo.setTargetAngle(40));
+      if (givenValue == 1) Serial.println(baseServo.setTargetAngle(80));
     }
     else if (actuatorID == 'K')
     {
