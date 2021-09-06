@@ -4,7 +4,7 @@
 #include "JointInfoStructs.hpp"
 
 #define PULSE_ON 15
-#define INCREMENT_DELAY_USECS 0
+#define INCREMENT_DELAY_USECS 10000
 
 Joint::Joint(String name, JointAngleInfo givenAngleInfo, JointPulseWidthInfo givenPulseWidthInfo, uint8_t channel, Adafruit_PWMServoDriver *pwmObject) :
     jointName(name),
