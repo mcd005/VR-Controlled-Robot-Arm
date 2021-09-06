@@ -17,7 +17,7 @@ public class WebCamDetect : MonoBehaviour
                 Debug.Log(devices[i].name);
             }
             // hardcoding the device name
-            WebCamTexture mycam = new WebCamTexture(devices[1].name);
+            WebCamTexture mycam = new WebCamTexture(devices[2].name);
 
             Debug.Log(mycam.deviceName + " jfdjfjfjf");
             rend.material.mainTexture = mycam;
