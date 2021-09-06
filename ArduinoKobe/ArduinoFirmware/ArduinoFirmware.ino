@@ -89,6 +89,7 @@ Joint claw("claw", clawAngles, smallServo, 5, &pwmDriver1); // small
 
 Joint baseServo("baseServo", baseAngles, smallServo, 0, &pwmDriver1); // big
 Joint bendServo("bendServo", bendAngles, bigServo, 1, &pwmDriver2);
+Joint smallClaw("smallClaw", smallClawAngles, smallServo, 2, &pwmDriver1);
 
 
 BigArm bigArmControl(&waist,&shoulder,&elbow,&pitch,&roll,&claw); 
@@ -134,8 +135,14 @@ void loop()
 
     if (actuatorID == 'D')
     {
-      if (givenValue == 0) Serial.println(baseServo.setTargetAngle(40));
-      if (givenValue == 1) Serial.println(baseServo.setTargetAngle(80));
+      if (givenValue == 0) {
+        Serial.println(baseServo.setTargetAngle(40));
+        smallClaw.setTargetAngle(180);
+      }
+      if (givenValue == 1) {
+        Serial.println(baseServo.setTargetAngle(75));
+        smallClaw.setTargetAngle(90);
+      }
     }
     else if (actuatorID == 'K')
     {
@@ -150,6 +157,7 @@ void loop()
     // else Serial.println("Invalid joint");
   }
   baseServo.incrementPosition();
+  smallClaw.incrementPosition();
 }
 
 bool isDeserializeJsonStringSuccessful()
