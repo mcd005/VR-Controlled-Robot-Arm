@@ -1,11 +1,15 @@
 # Kobe
 
-This is the intern project for summer July 2021. The idea is to demo a bomb disposal robot using virtual reality
+This is the intern project for summer July 2021. The idea is to demo a bomb disposal robot using virtual reality. There are two important functionalities which are proven in this project: 
+
+1. A robot that can move around an environment with a small arm that can be used to lift a small box (the bomb). A camera can live stream to the headset.
+2. A big arm with 3 degrees of freedom
+
 Project involves different components:
 
 1. Unity (version 2020.3.14)
 2. Arduino (Mega 2560) + HC-05 Bluetooth module
-3. Oculus Quest 2 (128 GB + 6 RAM) + Oculus Link
+3. Oculus Quest 2 (128 GB + 6 RAM) + 2 Oculus Touch controllers + Oculus Link
 4. Ricoh Theta V
 5. Robot made with electrical components
 
@@ -16,6 +20,15 @@ Developping with the Oculus Quest 2:
 * https://www.youtube.com/watch?v=YwFXQeBmxZ4 - setting up Unity for Oculus Quest 2
 * https://www.xrterra.com/developing-for-vr-with-quest-2-unity-for-the-first-time-a-step-by-step-guide/ - slower and not video 
 NOTE: These both explain how to run the Oculus quest 2 as a standalone headset. In order to not make it run that way: use the Link. In Unity Build settings choose as the platform 'PC, Mac & Linux Standalone'.
+Unity needs the following packages / assets to be downloaded.
+
+Package manager:
+* XR Interaction Toolkit (latest)
+* XR Plugin Management (latest)
+* Oculus XR Plugin (latest)
+
+Asset:
+* Oculus Integration: contains OVRInput, OVRManager etc. NOTE no need to download all the files (they take a lot of space), I have found that the VR package is the only needed file for this to work.
 
 How to run:
 1. Turn on headset and make sure Oculus Link is enabled
@@ -44,3 +57,10 @@ Go to ArduinoFirmware
 
 * ArduinoFirmware.ino: main file which contains the 'set up' and the 'loop' 
 * All the other files serve to abstract the implementation of the robot movements in an Object-Oriented Programming manner
+
+---------------------------------------------------------------------------------
+
+Branches right now:
+* main: runs the robot and the unity code allowing the robot to move around the environment, use the small arm (lift) and the operator to see the stream
+* bigArm: unity code to send data to robotic big arm to make it move around with three degrees of freedom
+* handTracking: branched from main and has code in the handTracking scene which displays the xyz coordinates of the operators thumb on the screen. Idea is to incorporate this data into the mainScene to allow the user to use their hands instead of the two Oculus Touch controllers.
