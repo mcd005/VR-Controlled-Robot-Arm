@@ -23,7 +23,7 @@ JointPulseWidthInfo smallServo { 150, 450 };
 //     Invert the given angle. In case a servo is on backwards for example
 // }
 
-JointAngleInfo waistAngles { 90, 0, 180, 10, true };
+JointAngleInfo waistAngles { 90, 0, 180, 15, true };
 JointAngleInfo shoulderAngles { 90, 0, 180, 45 + 10, false };
 JointAngleInfo elbowAngles { 90, 50, 180, 90 + 10, false };
 JointAngleInfo pitchAngles { 90, 0, 180, 10, false };
@@ -53,20 +53,23 @@ void setup()
 
 void loop()
 {
-    if (SerialMonitor.available())
+    if (Bluetooth.available())
     {
         // Expecting a comma seperated list of coords: W10,S50,E120 etc
-        String inputSerial = SerialMonitor.readStringUntil(',');
+        String inputSerial = Bluetooth.readStringUntil(',');
         char jointID = inputSerial[0];
         int givenAngle = inputSerial.substring(1).toInt();
 
-        if (jointID == 'W') Serial.println(waist.setTargetAngle(givenAngle));
-        else if (jointID == 'S') Serial.println(shoulder.setTargetAngle(givenAngle));
-        else if (jointID == 'E') Serial.println(elbow.setTargetAngle(givenAngle));
-        else if (jointID == 'P') Serial.println(pitch.setTargetAngle(givenAngle));
-        else if (jointID == 'R') Serial.println(roll.setTargetAngle(givenAngle));
-        else if (jointID == 'C') Serial.println(claw.setTargetAngle(givenAngle));
-        else Serial.println("Invalid joint");
+        String actuatorResponse;
+        if (jointID == 'W') actuatorResponse = waist.setTargetAngle(givenAngle);
+        else if (jointID == 'S') actuatorResponse = shoulder.setTargetAngle(givenAngle);
+        else if (jointID == 'E') actuatorResponse = elbow.setTargetAngle(givenAngle);
+        else if (jointID == 'P') actuatorResponse = pitch.setTargetAngle(givenAngle);
+        else if (jointID == 'R') actuatorResponse = roll.setTargetAngle(givenAngle);
+        else if (jointID == 'C') actuatorResponse = claw.setTargetAngle(givenAngle);
+        else if (jointID == 'K' || jointID == 'D') actuatorResponse = "Unassigned joint";
+        else actuatorResponse = "Invalid joint";
+        Serial.println(actuatorResponse);
     }
     waist.incrementPosition();
     shoulder.incrementPosition();
