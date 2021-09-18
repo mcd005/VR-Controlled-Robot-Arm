@@ -1,66 +1,27 @@
-# Kobe
+# VR Controlled Robot Arm
 
-This is the intern project for summer July 2021. The idea is to demo a bomb disposal robot using virtual reality. There are two important functionalities which are proven in this project: 
+One of the main limitations of some current robotics technology (e.g. bomb disposal robots) is that an operator often has to use joysticks to control the robot.
 
-1. A robot that can move around an environment with a small arm that can be used to lift a small box (the bomb). A camera can live stream to the headset.
-2. A big arm with 3 degrees of freedom
+Allowing a user to move their hands and arms as they would naturally, and have those movements be mirrored on robot arm, could allow for much more intuitive and dexterous control.
 
-Project involves different components:
+<img src="./Docs/ARM_Elevation_480p.gif" width=847>
+<img src="./Docs/ARM_ROM_480p.gif" width=847>
+<img src="./Docs/ARM_POV_480p.gif" width=847>
 
-1. Unity (version 2020.3.14)
-2. Arduino (Mega 2560) + HC-05 Bluetooth module
-3. Oculus Quest 2 (128 GB + 6 RAM) + 2 Oculus Touch controllers + Oculus Link
-4. Ricoh Theta V
-5. Robot made with electrical components
+Solutions for this kind of problem do exist already, particularly in the medical robotics space however a key advantage of what is shown here is the comparative low cost and portability: you may not need a 100kg, multi-thousand ££ rig to more dexterously control a robot arm!
 
-![image](https://user-images.githubusercontent.com/52036219/132705509-429d8e6e-2ad0-4e1b-8884-dd9425168909.png)
+Although the current iteration requires a user to hold a controller, future iterations can employ the Oculus Quest 2's hand and finger tracking to allow for even finer control.
 
-Unity is used as the platform to integrate the Oculus Quest 2, the camera live stream and processing / sending the data to the Arduino.
-Developping with the Oculus Quest 2:
-* https://www.youtube.com/watch?v=YwFXQeBmxZ4 - setting up Unity for Oculus Quest 2
-* https://www.xrterra.com/developing-for-vr-with-quest-2-unity-for-the-first-time-a-step-by-step-guide/ - slower and not video 
-NOTE: These both explain how to run the Oculus quest 2 as a standalone headset. In order to not make it run that way: use the Link. In Unity Build settings choose as the platform 'PC, Mac & Linux Standalone'.
-Unity needs the following packages / assets to be downloaded.
+This project initially targeted a military application however it may have use in other situations where a robot with human-level dexterity/flexibility of control can be sent into a dangerous environment in place of a person (e.g. construction, transport, mining etc).
 
-Package manager:
-* XR Interaction Toolkit (latest)
-* XR Plugin Management (latest)
-* Oculus XR Plugin (latest)
+# System Overview
 
-Asset:
-* Oculus Integration: contains OVRInput, OVRManager etc. NOTE no need to download all the files (they take a lot of space), I have found that the VR package is the only needed file for this to work.
+We have a Ricoh Theta V 360-degree camera piping video into Unity and then onwards to an Oculus Quest 2. This can allow a user to look around their entire environment. Video data is currently transferred by a tethered connection but will soon be streamed wirelessly.
 
-How to run:
-1. Turn on headset and make sure Oculus Link is enabled
-2. Camera is plugged to PC running Unity and is on Live mode
-3. Arduino code has been uploaded to Arduino
-4. HC-05 bluetooth module is paired with the computer
-5. Battery is connected to the robot
-6. Application can then be started by pressing the play button on Unity
+In Unity, we track the coordinates of the VR controller and then map that to servo rotations for each of the joints on the robot arm.
 
-![ezgif com-gif-maker (1)](https://user-images.githubusercontent.com/52036219/132708318-093f2bc5-8b52-4061-8285-7998d9c3477e.gif)
+Those rotations are sent via Bluetooth (again currently a short term solution) to an HC-05 connected to an Arduino, which drives each of the servos on the robot arm.
 
-High level file structure:
+# Acknowledgements
 
-*Unity* : UnityKobe
-
-Go to Assets then Scripts
-
-* HeadsetControlsManager: Collects and process data from the headset
-* BluetoothCommsManager: Sends the collected data to Arduino via Bluetooth
-* CommsManager: (**not in use anymore**) Sends the collected data by sending a request to a HTTP server on a Raspeberry PI - the PI is then wired to the Arduino
-* WebCamDetect: Places the Camera's live stream onto the inside of a sphere to allow operator to see the stream
-
-*Arduino* : ArduinoKobe
-
-Go to ArduinoFirmware
-
-* ArduinoFirmware.ino: main file which contains the 'set up' and the 'loop' 
-* All the other files serve to abstract the implementation of the robot movements in an Object-Oriented Programming manner
-
----------------------------------------------------------------------------------
-
-Branches right now:
-* main: runs the robot and the unity code allowing the robot to move around the environment, use the small arm (lift) and the operator to see the stream
-* bigArm: unity code to send data to robotic big arm to make it move around with three degrees of freedom
-* handTracking: branched from main and has code in the handTracking scene which displays the xyz coordinates of the operators thumb on the screen. Idea is to incorporate this data into the mainScene to allow the user to use their hands instead of the two Oculus Touch controllers.
+This repo is a fork of the one used to track source code for the PA Consulting "VR Bomb Disposal Robot" summer intern project. Credit to Alexis Dumon and Rishan Patel for their efforts laying the foundation of this work.
