@@ -1,7 +1,8 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
-
+using System;
+using UnityEngine.UI;
 
 public enum SmallArmControl
 {
@@ -60,15 +61,19 @@ public class HeadsetControlsManager : MonoBehaviour
 
     private string json = "";
 
-    public int bigArmWristFlexor;
-    public int bigArmClaw;
-    public int bigArmWristRotator;
-    public int bigArmElbow;
-    public int bigArmShoulder;
+    public double bigArmWristFlexor;
+    public double bigArmClaw;
+    public double bigArmWristRotator;
+    public double bigArmElbow;
+    public double bigArmShoulder;
+    public double bigArmWaist;
 
     public SmallArmControl smallArmVerticalDirection; // U, D, N <-- one variable and letter describes vertical movement direction of the arm
 
     public ChassisDirection chassisDirection; // 0 = dont move, 1 = forward, 2 = right, 3 = down, 4 = left <-- one variable and letter describes movement direction of the arm
+
+
+    public Text controllerPositionText;
 
     // Start is called before the first frame update
     void Start()
@@ -97,6 +102,9 @@ public class HeadsetControlsManager : MonoBehaviour
 
         // big arm
         RControllerPos = OVRInput.GetLocalControllerPosition(OVRInput.Controller.RHand);
+        string positionAsString = RControllerPos.ToString("F2");
+        // Debug.Log(positionAsString);
+        // controllerPositionText.text = positionAsString;
 
         // small arm
         RAButtonPress = OVRInput.Get(OVRInput.Button.One);
@@ -105,16 +113,31 @@ public class HeadsetControlsManager : MonoBehaviour
 
     public void translateBigArmData(Vector3 position)
     {
-        float x = position.x;
-        float y = position.y;
-        float z = position.z;
+        float xOrigin = 0.2f;
+        float yOrigin = -0.4f;
+        float zOrigin = 0.25f;
+
+        float x = position.x - xOrigin;
+        float y = position.y - yOrigin;
+        float z = position.z - zOrigin;
         // complex mathematics for x, y, z to ouput degree for each servo
 
-        bigArmWristFlexor = 60;
-        bigArmClaw = 0;
-        bigArmWristRotator = 0;
-        bigArmElbow = 0;
-        bigArmShoulder = 0;
+        bigArmWristFlexor = 90.0;
+        bigArmClaw = 0.0;
+        bigArmWristRotator = 0.0;
+        bigArmElbow = 0.0;
+        bigArmShoulder = 90.0;
+        bigArmWaist = 90.0;
+
+        double changeDueToZ = z * 250;
+        bigArmShoulder -= changeDueToZ;
+        bigArmElbow += changeDueToZ;
+
+	double changeDueToY = y * 250;
+	bigArmElbow += changeDueToY;
+	bigArmWristFlexor -= changeDueToY;
+
+        if ((z + zOrigin) > 0) bigArmWaist += (Math.Atan2((double) x , (double) z) * (180 / Math.PI) * Math.Abs(z) * 3);
     }
 
     public void translateChassisData(ChassisControlData chassisControlData)
@@ -173,7 +196,10 @@ public class HeadsetControlsManager : MonoBehaviour
     public string getData() {
       int smallArmValue = (int) smallArmVerticalDirection;
       int chassisDirectionValue = (int) chassisDirection;
-      return $"D{smallArmValue},K{chassisDirectionValue},";
+
+      string data = $"D{smallArmValue},K{(int) chassisDirectionValue},W{(int) bigArmWaist},S{(int) bigArmShoulder},E{(int) bigArmElbow},";
+      controllerPositionText.text = data;
+      return data;
     }
 
 
