@@ -6,8 +6,8 @@ m_ProjectFiles:
     m_ContentTrackingEnabled: 1
     m_ModificationDate:
       serializedVersion: 2
-      ticks: 637722276622004202
-    m_Hash: 1206723745
+      ticks: 637722613028299209
+    m_Hash: 2283148780
   m_LockFileStatus:
     m_FilePath: C:/Users/jpmcd/Documents/Coding Projects and Practice/VR Bomb Disposal
       Robot/VR-Controlled-Robot-Arm/UnityKobe/Packages/packages-lock.json
@@ -15,8 +15,8 @@ m_ProjectFiles:
     m_ContentTrackingEnabled: 1
     m_ModificationDate:
       serializedVersion: 2
-      ticks: 637722276710069637
-    m_Hash: 3682739031
+      ticks: 637722613028425998
+    m_Hash: 1247267764
 m_EmbeddedPackageManifests:
   m_ManifestsStatus: {}
 m_PackageAssets:
@@ -896,6 +896,272 @@ m_PackageAssets:
         type: 
         url: 
         revision: 
+        path: 
+    - packageId: com.unity.xr.management@4.2.0
+      testable: 0
+      isDirectDependency: 1
+      version: 4.2.0
+      source: 1
+      resolvedPath: C:\Users\jpmcd\Documents\Coding Projects and Practice\VR Bomb
+        Disposal Robot\VR-Controlled-Robot-Arm\UnityKobe\Library\PackageCache\com.unity.xr.management@4.2.0
+      assetPath: Packages/com.unity.xr.management
+      name: com.unity.xr.management
+      displayName: XR Plugin Management
+      author:
+        name: 
+        email: 
+        url: 
+      category: 
+      type: 
+      description: Package that provides simple management of XR plug-ins. Manages
+        and offers help with loading, initialization, settings, and build support
+        for XR plug-ins.
+      status: 4
+      errors: []
+      versions:
+        all:
+        - 0.1.0-preview.8
+        - 0.1.0-preview.12
+        - 1.0.0-preview.2
+        - 2.0.0-preview.3
+        - 2.0.0-preview.6
+        - 2.0.0-preview.9
+        - 2.0.0-preview.10
+        - 2.0.0-preview.13
+        - 2.0.0-preview.21
+        - 2.0.0-preview.22
+        - 2.0.0-preview.24
+        - 2.0.0-preview.25
+        - 2.0.0-preview.26
+        - 3.0.1
+        - 3.0.2-preview.1
+        - 3.0.2-preview.2
+        - 3.0.3
+        - 3.0.4-preview.1
+        - 3.0.4-preview.3
+        - 3.0.4
+        - 3.0.5-preview.1
+        - 3.0.5
+        - 3.0.6-preview.2
+        - 3.0.6
+        - 3.1.0-preview.2
+        - 3.2.4
+        - 3.2.6
+        - 3.2.7
+        - 3.2.9
+        - 3.2.10
+        - 3.2.11-preview.1
+        - 3.2.12
+        - 3.2.13
+        - 3.2.15
+        - 3.2.16
+        - 3.2.17
+        - 4.0.0-exp.2
+        - 4.0.0-pre.2
+        - 4.0.0-pre.3
+        - 4.0.1
+        - 4.0.3
+        - 4.0.5
+        - 4.0.6
+        - 4.0.7
+        - 4.1.0-pre.1
+        - 4.1.0-pre.2
+        - 4.1.0
+        - 4.2.0
+        compatible:
+        - 4.0.1
+        - 4.0.3
+        - 4.0.5
+        - 4.0.6
+        - 4.0.7
+        - 4.1.0-pre.1
+        - 4.1.0-pre.2
+        - 4.1.0
+        - 4.2.0
+        verified: 4.0.7
+      dependencies:
+      - name: com.unity.modules.subsystems
+        version: 1.0.0
+      - name: com.unity.modules.vr
+        version: 1.0.0
+      - name: com.unity.modules.xr
+        version: 1.0.0
+      - name: com.unity.xr.legacyinputhelpers
+        version: 2.1.7
+      - name: com.unity.subsystemregistration
+        version: 1.0.6
+      resolvedDependencies:
+      - name: com.unity.modules.subsystems
+        version: 1.0.0
+      - name: com.unity.modules.jsonserialize
+        version: 1.0.0
+      - name: com.unity.modules.vr
+        version: 1.0.0
+      - name: com.unity.modules.physics
+        version: 1.0.0
+      - name: com.unity.modules.xr
+        version: 1.0.0
+      - name: com.unity.xr.legacyinputhelpers
+        version: 2.1.8
+      - name: com.unity.subsystemregistration
+        version: 1.0.6
+      keywords:
+      - xr
+      - sdk
+      - ar
+      - vr
+      - management
+      - build
+      - plugin
+      registry:
+        id: main
+        name: 
+        url: https://packages.unity.com
+        scopes: []
+        isDefault: 1
+        capabilities: 7
+      hasRegistry: 1
+      hideInEditor: 1
+      entitlements:
+        isAllowed: 1
+      isAssetStorePackage: 0
+      datePublishedTicks: 637704350680000000
+      documentationUrl: 
+      hasRepository: 1
+      repository:
+        type: git
+        url: https://github.cds.internal.unity3d.com/unity/xr.sdk.management.git
+        revision: c8fb6583d6d04516909a8d2ab999a1dbe90ade50
+        path: 
+    - packageId: com.unity.xr.oculus@1.10.0
+      testable: 0
+      isDirectDependency: 1
+      version: 1.10.0
+      source: 1
+      resolvedPath: C:\Users\jpmcd\Documents\Coding Projects and Practice\VR Bomb
+        Disposal Robot\VR-Controlled-Robot-Arm\UnityKobe\Library\PackageCache\com.unity.xr.oculus@1.10.0
+      assetPath: Packages/com.unity.xr.oculus
+      name: com.unity.xr.oculus
+      displayName: Oculus XR Plugin
+      author:
+        name: 
+        email: 
+        url: 
+      category: 
+      type: 
+      description: Provides display and input support for Oculus devices.
+      status: 4
+      errors: []
+      versions:
+        all:
+        - 0.0.9-preview
+        - 0.1.2-preview.1
+        - 0.8.4-preview
+        - 1.0.0-preview.4
+        - 1.0.0
+        - 1.0.2
+        - 1.0.3-preview.1
+        - 1.1.0-preview
+        - 1.1.0
+        - 1.1.1
+        - 1.1.2-preview
+        - 1.1.2
+        - 1.1.3-preview
+        - 1.1.3-preview.1
+        - 1.1.4-preview
+        - 1.1.4-preview.1
+        - 1.1.4
+        - 1.1.5-preview
+        - 1.1.5
+        - 1.2.0-preview.1
+        - 1.2.0
+        - 1.3.1
+        - 1.3.3
+        - 1.3.4
+        - 1.4.0-preview.1
+        - 1.4.0-preview.2
+        - 1.4.0
+        - 1.4.3
+        - 1.5.0
+        - 1.5.1
+        - 1.6.0-preview.1
+        - 1.6.0-preview.2
+        - 1.6.1
+        - 1.7.0-preview.1
+        - 1.7.0-preview.2
+        - 1.7.0
+        - 1.8.1
+        - 1.9.0-preview.1
+        - 1.9.0
+        - 1.9.1
+        - 1.10.0-preview.1
+        - 1.10.0-preview.2
+        - 1.10.0
+        - 1.10.1-preview.3
+        - 1.11.0
+        - 2.0.0-preview.1
+        - 3.0.0-pre.1
+        compatible:
+        - 1.10.0
+        - 1.10.1-preview.3
+        - 1.11.0
+        - 2.0.0-preview.1
+        verified: 1.10.0
+      dependencies:
+      - name: com.unity.xr.management
+        version: 4.0.1
+      - name: com.unity.ugui
+        version: 1.0.0
+      resolvedDependencies:
+      - name: com.unity.xr.management
+        version: 4.2.0
+      - name: com.unity.modules.subsystems
+        version: 1.0.0
+      - name: com.unity.modules.jsonserialize
+        version: 1.0.0
+      - name: com.unity.modules.vr
+        version: 1.0.0
+      - name: com.unity.modules.physics
+        version: 1.0.0
+      - name: com.unity.modules.xr
+        version: 1.0.0
+      - name: com.unity.xr.legacyinputhelpers
+        version: 2.1.8
+      - name: com.unity.subsystemregistration
+        version: 1.0.6
+      - name: com.unity.ugui
+        version: 1.0.0
+      - name: com.unity.modules.ui
+        version: 1.0.0
+      - name: com.unity.modules.imgui
+        version: 1.0.0
+      keywords:
+      - oculus
+      - xr
+      - vr
+      - virtual
+      - rift
+      - quest
+      - xreditorsubsystem
+      registry:
+        id: main
+        name: 
+        url: https://packages.unity.com
+        scopes: []
+        isDefault: 1
+        capabilities: 7
+      hasRegistry: 1
+      hideInEditor: 1
+      entitlements:
+        isAllowed: 1
+      isAssetStorePackage: 0
+      datePublishedTicks: 637635137630000000
+      documentationUrl: 
+      hasRepository: 1
+      repository:
+        type: git
+        url: https://github.cds.internal.unity3d.com/unity/xr.sdk.oculus.git
+        revision: 2badea056ed7d508ea62ed8441cf21aac1ce80b2
         path: 
     - packageId: com.unity.modules.ai@1.0.0
       testable: 0
@@ -2671,6 +2937,159 @@ m_PackageAssets:
         type: 
         url: 
         revision: 
+        path: 
+    - packageId: com.unity.xr.legacyinputhelpers@2.1.8
+      testable: 0
+      isDirectDependency: 0
+      version: 2.1.8
+      source: 1
+      resolvedPath: C:\Users\jpmcd\Documents\Coding Projects and Practice\VR Bomb
+        Disposal Robot\VR-Controlled-Robot-Arm\UnityKobe\Library\PackageCache\com.unity.xr.legacyinputhelpers@2.1.8
+      assetPath: Packages/com.unity.xr.legacyinputhelpers
+      name: com.unity.xr.legacyinputhelpers
+      displayName: XR Legacy Input Helpers
+      author:
+        name: 
+        email: 
+        url: 
+      category: XR
+      type: 
+      description: This package includes the tracked pose driver for the legacy input
+        system, the XR Bindings Seeding Tool and 3Dof Arm Model support for the Tracked
+        Pose Driver. The Tracked Pose Driver is a behavior that enables GameObjects
+        to track input devices, the XR Bindings Seeding Tool adds a menu item under
+        the 'Assets' menu which populates the Input Asset with Unity's crossplatform
+        Input Bindings
+      status: 4
+      errors: []
+      versions:
+        all:
+        - 1.0.0
+        - 1.0.2
+        - 1.0.3
+        - 1.3.1
+        - 1.3.2
+        - 1.3.4
+        - 1.3.5
+        - 1.3.6
+        - 1.3.7
+        - 1.3.8
+        - 1.3.11
+        - 2.0.1
+        - 2.0.2
+        - 2.0.4
+        - 2.0.6
+        - 2.0.8
+        - 2.1.1
+        - 2.1.2
+        - 2.1.3
+        - 2.1.4
+        - 2.1.6
+        - 2.1.7
+        - 2.1.8
+        compatible:
+        - 2.1.8
+        verified: 2.1.8
+      dependencies:
+      - name: com.unity.modules.vr
+        version: 1.0.0
+      - name: com.unity.modules.xr
+        version: 1.0.0
+      resolvedDependencies:
+      - name: com.unity.modules.vr
+        version: 1.0.0
+      - name: com.unity.modules.jsonserialize
+        version: 1.0.0
+      - name: com.unity.modules.physics
+        version: 1.0.0
+      - name: com.unity.modules.xr
+        version: 1.0.0
+      - name: com.unity.modules.subsystems
+        version: 1.0.0
+      keywords:
+      - TPD
+      - Tracked Pose Driver
+      - XR
+      - Input
+      - Helpers
+      registry:
+        id: main
+        name: 
+        url: https://packages.unity.com
+        scopes: []
+        isDefault: 1
+        capabilities: 7
+      hasRegistry: 1
+      hideInEditor: 1
+      entitlements:
+        isAllowed: 1
+      isAssetStorePackage: 0
+      datePublishedTicks: 637623088970000000
+      documentationUrl: 
+      hasRepository: 1
+      repository:
+        type: git
+        url: https://github.cds.internal.unity3d.com/unity/com.unity.xr.legacyinputhelpers.git
+        revision: ed3b32c709a0e51cf73fda4b200c59b48955c4be
+        path: 
+    - packageId: com.unity.subsystemregistration@1.0.6
+      testable: 0
+      isDirectDependency: 0
+      version: 1.0.6
+      source: 1
+      resolvedPath: C:\Users\jpmcd\Documents\Coding Projects and Practice\VR Bomb
+        Disposal Robot\VR-Controlled-Robot-Arm\UnityKobe\Library\PackageCache\com.unity.subsystemregistration@1.0.6
+      assetPath: Packages/com.unity.subsystemregistration
+      name: com.unity.subsystemregistration
+      displayName: Subsystem Registration
+      author:
+        name: 
+        email: 
+        url: 
+      category: 
+      type: 
+      description: Provides internal registration mechanism for standalone subsystems. 
+        It allows a standalone subsystem to inform the Subsystem Manager of its existence.
+      status: 4
+      errors: []
+      versions:
+        all:
+        - 1.0.0-preview.4
+        - 1.0.4
+        - 1.0.5
+        - 1.0.6
+        - 1.1.0
+        - 1.1.1
+        compatible:
+        - 1.0.6
+        - 1.1.0
+        - 1.1.1
+        verified: 1.1.1
+      dependencies: []
+      resolvedDependencies: []
+      keywords:
+      - subsystem
+      - registration
+      - internal
+      registry:
+        id: main
+        name: 
+        url: https://packages.unity.com
+        scopes: []
+        isDefault: 1
+        capabilities: 7
+      hasRegistry: 1
+      hideInEditor: 1
+      entitlements:
+        isAllowed: 1
+      isAssetStorePackage: 0
+      datePublishedTicks: 637056434700000000
+      documentationUrl: 
+      hasRepository: 1
+      repository:
+        type: git
+        url: git@github.cds.internal.unity3d.com:unity/com.unity.subsystemregistration.git
+        revision: 0b4157c6c0a160c51e74ead305aee77e6f29527d
         path: 
     - packageId: com.unity.ext.nunit@1.0.6
       testable: 0
