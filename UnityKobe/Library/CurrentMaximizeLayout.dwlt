@@ -24,7 +24,7 @@ MonoBehaviour:
   m_MinSize: {x: 679, y: 492}
   m_MaxSize: {x: 14002, y: 14042}
   vertical: 0
-  controlID: 2875
+  controlID: 3264
 --- !u!114 &2
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -138,7 +138,7 @@ MonoBehaviour:
   m_MinSize: {x: 403, y: 492}
   m_MaxSize: {x: 10001, y: 14042}
   vertical: 1
-  controlID: 2876
+  controlID: 3265
 --- !u!114 &4
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -163,7 +163,7 @@ MonoBehaviour:
   m_MinSize: {x: 403, y: 221}
   m_MaxSize: {x: 8003, y: 4021}
   vertical: 0
-  controlID: 2877
+  controlID: 3266
 --- !u!114 &5
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -220,7 +220,7 @@ MonoBehaviour:
       scrollPos: {x: 0, y: 0}
       m_SelectedIDs: 
       m_LastClickedID: 0
-      m_ExpandedIDs: 54fbffff
+      m_ExpandedIDs: b8cdffffc0cdffffdccdffffe6cdffff54fbffff
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -360,9 +360,9 @@ MonoBehaviour:
     speed: 2
     m_Value: {x: -0.08717229, y: 0.89959055, z: -0.21045254, w: -0.3726226}
   m_Size:
-    m_Target: 2.107395
+    m_Target: 0.90739506
     speed: 2
-    m_Value: 2.107395
+    m_Value: 0.90739506
   m_Ortho:
     m_Target: 0
     speed: 2
@@ -441,7 +441,7 @@ MonoBehaviour:
     height: 365
   m_ViewDataDictionary: {fileID: 0}
   m_SearchFilter:
-    m_NameFilter: OVRCamera
+    m_NameFilter: OVRHand
     m_ClassNames: []
     m_AssetLabels: []
     m_AssetBundleNames: []
@@ -455,7 +455,7 @@ MonoBehaviour:
     m_Folders:
     - Assets/Oculus
     m_Globs: []
-    m_OriginalText: OVRCamera
+    m_OriginalText: OVRHand
   m_ViewMode: 1
   m_StartGridSize: 16
   m_LastFolders:
@@ -522,9 +522,9 @@ MonoBehaviour:
       m_Icon: {fileID: 0}
       m_ResourceFile: 
   m_ListAreaState:
-    m_SelectedInstanceIDs: 1ad4ffff
-    m_LastClickedInstanceID: -11238
-    m_HadKeyboardFocusLastEvent: 0
+    m_SelectedInstanceIDs: bcc4ffff
+    m_LastClickedInstanceID: -15172
+    m_HadKeyboardFocusLastEvent: 1
     m_ExpandedInstanceIDs: c623000000000000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
@@ -660,8 +660,8 @@ MonoBehaviour:
     m_CachedPref: 160
     m_ControlHash: -371814159
     m_PrefName: Preview_InspectorPreview
-  m_LastInspectedObjectInstanceID: -11238
-  m_LastVerticalScrollValue: 0
+  m_LastInspectedObjectInstanceID: -15172
+  m_LastVerticalScrollValue: 397
   m_GlobalObjectId: 
   m_LockTracker:
     m_IsLocked: 0
