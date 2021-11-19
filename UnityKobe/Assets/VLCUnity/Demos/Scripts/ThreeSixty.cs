@@ -57,7 +57,8 @@ public class ThreeSixty : MonoBehaviour
                 // download https://streams.videolan.org/streams/360/eagle_360.mp4 
                 // to your computer (to avoid network requests for smoother navigation)
                 // and adjust the Uri to the local path
-                var media = new Media(_libVLC, new Uri("https://streams.videolan.org/streams/360/Picadilly_Circus_Video.mp4"));
+                // var media = new Media(_libVLC, new Uri("https://streams.videolan.org/streams/360/Picadilly_Circus_Video.mp4"));
+                var media = new Media(_libVLC, new Uri("http://192.168.1.248:8080/"));
                 
                 Task.Run(async () => 
                 {
