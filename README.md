@@ -4,7 +4,7 @@ One of the main limitations of some current robotics technology (e.g. bomb dispo
 
 Allowing a user to move their hands and arms as they would naturally, and have those movements be mirrored on robot arm, could allow for much more intuitive and dexterous control.
 
-<img src="./Docs/ARM_Elevation_480p.gif" width=847>
+<img src="./Docs/clean_demo_front_480p.gif" width=847>
 <img src="./Docs/ARM_ROM_480p.gif" width=847>
 <img src="./Docs/ARM_POV_480p.gif" width=847>
 
